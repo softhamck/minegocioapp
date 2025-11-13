@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pedidos', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('negocio_id')->constrained('negocios');
-            $table->foreignId('cliente_id')->constrained('clientes');
-            $table->foreignId('estado_pedido_id')->constrained('estado_pedidos');
+            $table->foreignId('business_id')->constrained('business');
+            $table->foreignId('customer_id')->constrained('customers');
+            $table->foreignId('order_statuses_id')->constrained('order_statuses');
             $table->string('order_number')->nullable()->unique();
             $table->decimal('total', 12, 2)->default(0);
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('orders');
     }
 };

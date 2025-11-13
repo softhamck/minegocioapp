@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id'); // FORZAMOS BIGINT UNSIGNED
-            $table->string('nombre')->unique();
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

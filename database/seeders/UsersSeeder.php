@@ -16,5 +16,19 @@ class UsersSeeder extends Seeder
             'email' => 'admin@minegocioapp.com',
             'password' => Hash::make('admin123'),
         ]);
+
+        User::create([
+            'name'=>'Emprendedor',
+            'email'=>'emp@gmail.com',
+            'password'=>bcrypt('123'),
+            'rol_id'=>2
+        ]);
+
+        User::create([
+            'name'=>'Cliente',
+            'email'=>'cliente@gmail.com',
+            'password'=>bcrypt('123'),
+            'rol_id'=>3
+        ]);
     }
 }

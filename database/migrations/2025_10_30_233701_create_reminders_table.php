@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('reminders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('negocio_id')->constrained('negocios');
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('telephone')->nullable();
-            $table->string('address')->nullable();
+            $table->foreignId('business_id')->constrained('business');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->dateTime('date_reminder')->nullable();
+            $table->boolean('status')->default(false); // completado o no
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clientes');
+        Schema::dropIfExists('reminders');
     }
 };

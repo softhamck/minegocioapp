@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalles_pagos', function (Blueprint $table) {
+        Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pedidos_id')->constrained('pedidos');
-            $table->dateTime('fecha')->nullable();
+            $table->foreignId('orders_id')->constrained('orders');
+            $table->dateTime('date')->nullable();
             $table->decimal('total', 12, 2)->default(0);
-            $table->string('metodo')->nullable(); // simulado, stripe, mercadopago
-            $table->string('estado')->nullable(); // pendiente, completado, fallido
-            $table->string('ruta_factura')->nullable();
+            $table->string('method')->nullable(); // simulado, stripe, mercadopago
+            $table->string('status')->nullable(); // pendiente, completado, fallido
+            $table->string('invoice_path')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detalles_pagos');
+        Schema::dropIfExists('payment_details');
     }
 };
