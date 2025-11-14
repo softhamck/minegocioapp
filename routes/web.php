@@ -12,29 +12,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 /*
 |--------------------------------------------------------------------------
-| Redirección automática después de login
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth', 'role.redirect'])->group(function () {
-    Route::get('/redirect-role', function () {
-        // Aquí no va nada, solo usa el middleware
-    })->name('redirect.role');
-});
-
-
-/*
-|--------------------------------------------------------------------------
-| Dashboard (solo se usa si el usuario no tiene rol válido)
+| Dashboard principal (redirección según rol)
 |--------------------------------------------------------------------------
 */
 Route::get('/dashboard', function () {
     return redirect()->route('redirect.role');
-})->middleware(['auth']);
+})->middleware(['auth'])->name('dashboard');
 
-
+/*
+|--------------------------------------------------------------------------
+| Redirección por rol
+|--------------------------------------------------------------------------
+*/
+Route::get('/redirect-role', function () {
+    $user = auth()->user();
+    switch ($user->rol_id) {
+        case 1:
+            return redirect()->route('admin.dashboard');
+        case 2:
+            return redirect()->route('emprendedor.dashboard');
+        case 3:
+            return redirect()->route('cliente.dashboard');
+        default:
+            return redirect('/'); // o alguna página de error
+    }
+})->middleware(['auth'])->name('redirect.role');
 
 /*
 |--------------------------------------------------------------------------
@@ -54,10 +58,9 @@ Route::middleware('auth')->group(function () {
 
 });
 
-
 /*
 |--------------------------------------------------------------------------
-| RUTAS POR ROL (solo para mostrar la vista correspondiente)
+| Dashboards por rol
 |--------------------------------------------------------------------------
 */
 
@@ -81,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
         return view('cliente.dashboard');
     })->name('cliente.dashboard');
 });
-
 
 /*
 |--------------------------------------------------------------------------
