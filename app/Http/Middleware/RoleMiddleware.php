@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
@@ -11,17 +12,29 @@ class RoleMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * $roleParam puede ser '1' (id) o 'Admin' (nombre)
      */
-
-    public function handle(Request $request, Closure $next, $rol): Response
+    public function handle(Request $request, Closure $next, $roleParam): Response
     {
-        if (!Auth::check()) {
-            return redirect('/login');
+        if (! Auth::check()) {
+            return redirect()->route('login');
         }
 
-        // Comparar según text EXACTO en DB
-        if (Auth::user()->rol->name !== $rol) {
+        $user = Auth::user();
+
+        // Si pasaron un número, lo comparamos con rol_id
+        if (is_numeric($roleParam)) {
+            if ((int) $user->rol_id !== (int) $roleParam) {
+                abort(403);
+            }
+            return $next($request);
+        }
+
+        // Si pasaron texto, comparamos con el nombre del rol (si existe relacion 'rol')
+        $roleName = strtolower($roleParam);
+        $userRoleName = strtolower($user->rol->name ?? $user->rol->nombre ?? '');
+
+        if ($userRoleName !== $roleName) {
             abort(403);
         }
 
