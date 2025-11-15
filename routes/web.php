@@ -3,29 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Página pública
-|--------------------------------------------------------------------------
-*/
+// Página Publica
 Route::get('/', function () {
     return view('welcome');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Dashboard principal (redirección según rol)
-|--------------------------------------------------------------------------
-*/
+// Dashboard Principal
 Route::get('/dashboard', function () {
     return redirect()->route('redirect.role');
 })->middleware(['auth'])->name('dashboard');
 
-/*
-|--------------------------------------------------------------------------
-| Redirección por rol
-|--------------------------------------------------------------------------
-*/
+// Redirección por Rol
 Route::get('/redirect-role', function () {
     $user = auth()->user();
     switch ($user->rol_id) {
@@ -40,11 +28,7 @@ Route::get('/redirect-role', function () {
     }
 })->middleware(['auth'])->name('redirect.role');
 
-/*
-|--------------------------------------------------------------------------
-| Perfil
-|--------------------------------------------------------------------------
-*/
+// Perfil
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])
@@ -58,11 +42,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-/*
-|--------------------------------------------------------------------------
-| Dashboards por rol
-|--------------------------------------------------------------------------
-*/
+//Dashboard por Rol
 
 // ADMIN (rol_id = 1)
 Route::middleware(['auth'])->group(function () {
@@ -85,9 +65,5 @@ Route::middleware(['auth'])->group(function () {
     })->name('cliente.dashboard');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Autenticación (Laravel Breeze/Fortify)
-|--------------------------------------------------------------------------
-*/
+// Autenticación (Laravel Breeze)
 require __DIR__.'/auth.php';

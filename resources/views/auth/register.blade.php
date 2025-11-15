@@ -9,6 +9,16 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- Rol -->
+         <div class="mt-4">
+             <x-input-label for="rol_id" :value="'Tipo de usuario'" />
+              <select id="rol_id" name="rol_id" class="block w-full mt-1" required>
+               <option value="2">Emprendedor</option>
+               <option value="3">Cliente</option>
+              </select>
+             <x-input-error :messages="$errors->get('rol_id')" class="mt-2" />
+         </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
