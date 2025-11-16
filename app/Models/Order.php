@@ -7,33 +7,39 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use HasFactory;
+   use HasFactory;
 
-    protected $table = 'pedidos';
-    protected $fillable = ['negocio_id', 'cliente_id', 'numeroOrden', 'estado_id', 'total'];
+    protected $table = 'orders';
+    protected $fillable = [
+        'business_id',        
+        'user_id',        
+        'order_statuses_id', 
+        'order_number',       
+        'total'
+    ];
 
     public function business()
     {
-        return $this->belongsTo(Business::class, 'negocio_id');
+        return $this->belongsTo(Business::class, 'business_id'); 
     }
 
-    public function customer()
+    public function users()
     {
-        return $this->belongsTo(Customer::class, 'cliente_id');
+        return $this->belongsTo(Customer::class, 'user_id'); 
     }
 
     public function status()
     {
-        return $this->belongsTo(OrderStatus::class, 'estado_id');
+        return $this->belongsTo(OrderStatus::class, 'order_statuses_id');
     }
 
     public function details()
     {
-        return $this->hasMany(OrderDetail::class, 'orden_id');
+        return $this->hasMany(OrderDetail::class, 'order_id'); 
     }
 
-    public function payments()
+    public function payments_details()
     {
-        return $this->hasMany(Payment::class, 'pedido_id');
+        return $this->hasMany(Payment::class, 'order_id'); 
     }
 }

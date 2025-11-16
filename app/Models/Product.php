@@ -9,12 +9,20 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'productos';
-    protected $fillable = ['negocio_id', 'name', 'description', 'price', 'quantity', 'image', 'status'];
+    protected $table = 'products';
+    protected $fillable = [
+        'business_id',
+        'name',
+        'description',
+        'price',
+        'quantity',   // corregido (antes stock)
+        'image',
+        'active'      // corregido (antes status)
+    ];
 
     public function business()
     {
-        return $this->belongsTo(Business::class, 'negocio_id');
+        return $this->belongsTo(Business::class, 'business_id');
     }
 
     public function orderDetails()

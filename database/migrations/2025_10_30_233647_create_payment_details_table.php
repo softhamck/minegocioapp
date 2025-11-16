@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('orders_id')->constrained('orders');
+            $table->foreignId('order_id')->constrained('orders');
             $table->dateTime('date')->nullable();
             $table->decimal('total', 12, 2)->default(0);
             $table->string('method')->nullable(); // simulado, stripe, mercadopago

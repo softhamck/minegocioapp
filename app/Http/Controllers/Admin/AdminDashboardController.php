@@ -12,7 +12,7 @@ class AdminDashboardController extends Controller
     public function index() {
 
         $totalUsers = User::where('rol_id', '!=', 1)->count();
-        $totalOrders = Order::count(); 
+        $totalOrders = Orders::count(); 
         $totalProducts = Product::count(); 
 
         return view('admin.dashboard', compact('totalUsers', 'totalOrders', 'totalProducts'));
