@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Cliente\ProductClientController;
 
 // Página pública
 Route::get('/', function () {
@@ -78,11 +79,45 @@ Route::middleware(['auth', 'role:2'])->group(function () {
 });
 
 // CLIENTE (rol_id = 3)
-Route::middleware(['auth', 'role:3'])->group(function () {
-    Route::get('/cliente/dashboard', function () {
-        return view('cliente.dashboard');
-    })->name('cliente.dashboard');
-});
+Route::middleware(['auth', 'role:3'])
+    ->prefix('cliente')
+    ->name('cliente.')
+    ->group(function () {
+
+        // Dashboard del cliente
+        Route::get('/dashboard', function () {
+            return view('cliente.dashboard');
+        })->name('dashboard');
+
+        // Catálogo general de productos
+        Route::get('/productos', [ProductClientController::class, 'index'])
+            ->name('cliente.productos.index');
+
+        Route::get('/productos/{id}', [ProductClientController::class, 'show'])
+            ->name('cliente.productos.show');
+
+        // Ver tiendas / emprendedores
+        Route::get('/tiendas', [\App\Http\Controllers\Client\StoreController::class, 'index'])
+            ->name('tiendas.index');
+
+        Route::get('/tiendas/{store}', [\App\Http\Controllers\Client\StoreController::class, 'show'])
+            ->name('tiendas.show');
+
+        // Carrito
+        Route::get('/carrito', [\App\Http\Controllers\Client\CartController::class, 'index'])
+            ->name('carrito.index');
+
+        Route::post('/carrito/{product}/add', [\App\Http\Controllers\Client\CartController::class, 'add'])
+            ->name('carrito.add');
+
+        Route::delete('/carrito/{product}/remove', [\App\Http\Controllers\Client\CartController::class, 'remove'])
+            ->name('carrito.remove');
+
+        // Crear pedido
+        Route::post('/pedido', [\App\Http\Controllers\Client\OrderClientController::class, 'store'])
+            ->name('pedido.store');
+    });
+
 
 
 // Autenticación (Laravel Breeze)
