@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Cliente\ProductClientController;
+use App\Http\Controllers\Emprendedor\BusinessController;
+use App\Http\Controllers\Emprendedor\EmprendedorDashboardController;
+
 
 // Página pública
 Route::get('/', function () {
@@ -76,9 +79,33 @@ Route::middleware(['auth', 'role:2'])
     ->prefix('emprendedor')
     ->name('emprendedor.')
     ->group(function () {
+
         Route::get('/dashboard', [\App\Http\Controllers\Emprendedor\EmprendedorDashboardController::class, 'index'])
             ->name('dashboard');
+
+        // Negocios
+        Route::get('/business', [BusinessController::class, 'index'])->name('business.index');
+        Route::get('/business/create', [BusinessController::class, 'create'])->name('business.create');
+        Route::post('/business', [BusinessController::class, 'store'])->name('business.store');
+        Route::get('/business/{business}/edit', [BusinessController::class, 'edit'])->name('business.edit');
+        Route::put('/business/{business}', [BusinessController::class, 'update'])->name('business.update');
+        Route::delete('/business/{business}', [BusinessController::class, 'destroy'])
+        ->name('business.destroy');
+        Route::get('/business/{business}', [BusinessController::class, 'show'])
+        ->name('business.show');
+
+
+
+
+        // **Productos (agrega esto)**
+        Route::get('/products', [\App\Http\Controllers\Emprendedor\ProductController::class, 'index'])
+            ->name('products.index');
+
+        // **Pedidos (agrega esto si lo usas)**
+        Route::get('/orders', [\App\Http\Controllers\Emprendedor\OrderController::class, 'index'])
+            ->name('orders.index');
     });
+
 
 
 // CLIENTE (rol_id = 3)
