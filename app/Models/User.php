@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'rol_id');
     }
+
+    // Relación con Negocios
+    public function businesses() {
+        return $this->hasMany(Business::class, 'user_id');
+    }
 }

@@ -12,6 +12,7 @@ class Business extends Model
     protected $table = 'business';
     protected $fillable = ['usuario_id', 'name', 'description', 'phone'];
 
+    // Relación de Negocios con Clientes
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

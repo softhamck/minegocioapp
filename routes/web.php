@@ -72,11 +72,14 @@ Route::middleware(['auth', 'role:1'])
 
 
 // EMPRENDEDOR (rol_id = 2)
-Route::middleware(['auth', 'role:2'])->group(function () {
-    Route::get('/emprendedor/dashboard', function () {
-        return view('emprendedor.dashboard');
-    })->name('emprendedor.dashboard');
-});
+Route::middleware(['auth', 'role:2'])
+    ->prefix('emprendedor')
+    ->name('emprendedor.')
+    ->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\Emprendedor\EmprendedorDashboardController::class, 'index'])
+            ->name('dashboard');
+    });
+
 
 // CLIENTE (rol_id = 3)
 Route::middleware(['auth', 'role:3'])
