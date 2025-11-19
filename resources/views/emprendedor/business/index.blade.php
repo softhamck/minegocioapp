@@ -127,7 +127,7 @@
                                    class="flex-1 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 hover:text-blue-300 text-center py-2 px-3 rounded-lg text-sm font-medium transition-all duration-300 border border-blue-500/30 hover:border-blue-400/50">
                                     Ver Detalles
                                 </a>
-                                <a href="{{ route('emprendedor.products.index', ['business' => $business->id]) }}" 
+                                <a href="{{ route('emprendedor.business.products.index', ['business' => $business->id]) }}" 
                                    class="flex-1 bg-green-600/20 hover:bg-green-600/30 text-green-400 hover:text-green-300 text-center py-2 px-3 rounded-lg text-sm font-medium transition-all duration-300 border border-green-500/30 hover:border-green-400/50">
                                     Productos
                                 </a>

@@ -80,35 +80,55 @@ Route::middleware(['auth', 'role:2'])
     ->name('emprendedor.')
     ->group(function () {
 
+        // Dashboard
         Route::get('/dashboard', [\App\Http\Controllers\Emprendedor\EmprendedorDashboardController::class, 'index'])
             ->name('dashboard');
 
-        // Negocios
+        // CRUD Negocios
         Route::get('/business', [BusinessController::class, 'index'])->name('business.index');
         Route::get('/business/create', [BusinessController::class, 'create'])->name('business.create');
         Route::post('/business', [BusinessController::class, 'store'])->name('business.store');
+        Route::get('/business/{business}', [BusinessController::class, 'show'])->name('business.show');
         Route::get('/business/{business}/edit', [BusinessController::class, 'edit'])->name('business.edit');
         Route::put('/business/{business}', [BusinessController::class, 'update'])->name('business.update');
-        Route::delete('/business/{business}', [BusinessController::class, 'destroy'])
-        ->name('business.destroy');
-        Route::get('/business/{business}', [BusinessController::class, 'show'])
-        ->name('business.show');
+        Route::delete('/business/{business}', [BusinessController::class, 'destroy'])->name('business.destroy');
 
-
-
-
-        // **Productos (agrega esto)**
-        Route::get('/products', [\App\Http\Controllers\Emprendedor\ProductController::class, 'index'])
-            ->name('products.index');
-
-        // **Pedidos (agrega esto si lo usas)**
+        // Pedidos del emprendedor (si aplica)
         Route::get('/orders', [\App\Http\Controllers\Emprendedor\OrderController::class, 'index'])
             ->name('orders.index');
+
+
+        // PRODUCTOS POR NEGOCIO
+        Route::prefix('business/{business}')
+            ->name('business.')
+            ->group(function () {
+
+                Route::get('/products', [\App\Http\Controllers\Emprendedor\ProductController::class, 'index'])
+                    ->name('products.index');
+
+                Route::get('/products/create', [\App\Http\Controllers\Emprendedor\ProductController::class, 'create'])
+                    ->name('products.create');
+
+                Route::post('/products', [\App\Http\Controllers\Emprendedor\ProductController::class, 'store'])
+                    ->name('products.store');
+
+                Route::get('/products/{product}/edit', [\App\Http\Controllers\Emprendedor\ProductController::class, 'edit'])
+                    ->name('products.edit');
+
+                Route::put('/products/{product}', [\App\Http\Controllers\Emprendedor\ProductController::class, 'update'])
+                    ->name('products.update');
+
+                Route::delete('/products/{product}', [\App\Http\Controllers\Emprendedor\ProductController::class, 'destroy'])
+                    ->name('products.destroy');
+            });
     });
 
 
 
-// CLIENTE (rol_id = 3)
+
+
+
+    // CLIENTE (rol_id = 3)
 Route::middleware(['auth', 'role:3'])
     ->prefix('cliente')
     ->name('cliente.')

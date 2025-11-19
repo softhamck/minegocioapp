@@ -15,9 +15,9 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'quantity',   // corregido (antes stock)
+        'quantity',   
         'image',
-        'active'      // corregido (antes status)
+        'active'     
     ];
 
     public function business()
