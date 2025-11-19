@@ -98,7 +98,7 @@
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <!-- Explorar Productos -->
-                    <a href="{{ url('cliente.productos.index') }}" 
+                    <a href="{{ route('cliente.productos.index') }}" 
                        class="group glass-card rounded-xl p-5 text-center hover-glow transition-all duration-300 border border-blue-500/20 hover:border-blue-400/50 hover:transform hover:-translate-y-1">
                         <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

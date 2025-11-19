@@ -6,9 +6,13 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Cliente\ProductClientController;
 use App\Http\Controllers\Emprendedor\BusinessController;
 use App\Http\Controllers\Emprendedor\EmprendedorDashboardController;
+use App\Http\Controllers\Cliente\BusinessClientController;
+use App\Http\Controllers\Cliente\CartClientController;
+use App\Http\Controllers\Cliente\OrderClientController;
+use App\Http\Controllers\Cliente\ProductClientController;
+use App\Http\Controllers\Cliente\StoreClientController;
 
 
 // Página pública
@@ -141,30 +145,32 @@ Route::middleware(['auth', 'role:3'])
 
         // Catálogo general de productos
         Route::get('/productos', [ProductClientController::class, 'index'])
-            ->name('cliente.productos.index');
+            ->name('productos.index');
 
         Route::get('/productos/{id}', [ProductClientController::class, 'show'])
-            ->name('cliente.productos.show');
+            ->name('productos.show');
+
+        Route::get('/productos/{store}/{product}', [ProductClientController::class, 'show'])->name('productos.show');
 
         // Ver tiendas / emprendedores
-        Route::get('/tiendas', [\App\Http\Controllers\Client\StoreController::class, 'index'])
+        Route::get('/tiendas', [StoreClientController::class, 'index'])
             ->name('tiendas.index');
 
-        Route::get('/tiendas/{store}', [\App\Http\Controllers\Client\StoreController::class, 'show'])
+        Route::get('/tiendas/{store}', [StoreClientController::class, 'show'])
             ->name('tiendas.show');
 
         // Carrito
-        Route::get('/carrito', [\App\Http\Controllers\Client\CartController::class, 'index'])
+        Route::get('/carrito', [CartClientController::class, 'index'])
             ->name('carrito.index');
 
-        Route::post('/carrito/{product}/add', [\App\Http\Controllers\Client\CartController::class, 'add'])
+        Route::post('/carrito/{product}/add', [CartClientController::class, 'add'])
             ->name('carrito.add');
 
-        Route::delete('/carrito/{product}/remove', [\App\Http\Controllers\Client\CartController::class, 'remove'])
+        Route::delete('/carrito/{product}/remove', [CartClientController::class, 'remove'])
             ->name('carrito.remove');
 
         // Crear pedido
-        Route::post('/pedido', [\App\Http\Controllers\Client\OrderClientController::class, 'store'])
+        Route::post('/pedido', [OrderClientController::class, 'store'])
             ->name('pedido.store');
     });
 
