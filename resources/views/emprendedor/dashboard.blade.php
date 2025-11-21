@@ -62,7 +62,7 @@
                 </a>
 
                 <!-- Tarjeta: Productos -->
-                <a href="{{ route('emprendedor.products.index') }}" 
+                <a href="{{ route('emprendedor.business.index') }}" 
                    class="glass-card rounded-xl p-6 hover-glow transition-all duration-300 group border border-gray-700/50 hover:border-green-500/30 hover:transform hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -119,7 +119,7 @@
                     </a>
 
                     <!-- Productos -->
-                    <a href="{{ route('emprendedor.products.index') }}" 
+                    <a href="{{ route('emprendedor.business.index') }}" 
                        class="group glass-card rounded-xl p-5 text-center hover-glow transition-all duration-300 border border-green-500/20 hover:border-green-400/50 hover:transform hover:-translate-y-1">
                         <div class="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                             <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
