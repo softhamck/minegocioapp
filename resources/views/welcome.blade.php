@@ -5,175 +5,234 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name', 'MiNegocioApp') }}</title>
 
-        <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="{{ asset('logo.ico') }}">
         <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
-        
-        <!-- Para dispositivos Apple -->
         <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
-        <!-- Fonts -->
+
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
 
-        <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        <style>
-            .hero-gradient {
-                background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            }
-            .card-glass {
-                background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            .hover-glow:hover {
-                box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-            }
-            .feature-icon {
-                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            }
-        </style>
     </head>
-    <body class="font-sans antialiased hero-gradient text-gray-100">
-        <!-- Header -->
-        <header class="w-full max-w-7xl mx-auto px-6 py-8">
-            @if (Route::has('login'))
-                <nav class="flex items-center justify-between">
-                    <!-- Logo -->
-                    <div class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg"></div>
-                        <span class="text-xl font-bold text-white">MiNegocioApp</span>
-                    </div>
 
-                    <!-- Navigation -->
-                    <div class="flex items-center space-x-4">
-                        @auth
-                            <a href="{{ url('/dashboard') }}" 
-                               class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 hover-glow font-medium">
-                                Dashboard
-                            </a>
-                        @else
-                            <a href="{{ route('login') }}" 
-                               class="px-6 py-2 text-gray-300 hover:text-white transition-colors duration-300 font-medium">
-                                Iniciar Sesión
-                            </a>
+    <body class="antialiased font-[Figtree] text-[#1F2937] bg-[#FDF4FF]">
+        <div class="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(196,181,253,0.35),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(244,114,182,0.18),_transparent_30%),linear-gradient(135deg,#FDF4FF_0%,#FCF7FF_45%,#FFF7FB_100%)]">
+
+            <!-- decorative blur -->
+            <div class="pointer-events-none absolute -top-16 -left-16 h-72 w-72 rounded-full bg-[#C4B5FD]/40 blur-3xl"></div>
+            <div class="pointer-events-none absolute top-1/3 -right-20 h-80 w-80 rounded-full bg-[#F472B6]/20 blur-3xl"></div>
+            <div class="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-[#E9D5FF]/40 blur-3xl"></div>
+
+            <!-- Header -->
+            <header class="relative z-20 mx-auto w-full max-w-7xl px-6 py-8">
+                @if (Route::has('login'))
+                    <nav class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.22)]">
+                                <span class="text-lg font-bold text-white">M</span>
+                            </div>
+
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-[0.32em] text-[#7C3AED]">
+                                    MiNegocioApp
+                                </p>
+                                <p class="text-sm font-medium text-[#6B7280]">
+                                    para mujeres emprendedoras
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            @auth
+                                <a href="{{ url('/dashboard') }}"
+                                   class="rounded-full bg-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(124,58,237,0.25)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#6D28D9]">
+                                    Dashboard
+                                </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                   class="rounded-full px-4 py-2 text-sm font-medium text-[#6B7280] transition duration-300 hover:bg-white/60 hover:text-[#7C3AED]">
+                                    Iniciar Sesión
+                                </a>
+
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}"
+                                       class="rounded-full bg-[#F472B6] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(244,114,182,0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#EC4899]">
+                                        Registrarse
+                                    </a>
+                                @endif
+                            @endauth
+                        </div>
+                    </nav>
+                @endif
+            </header>
+
+            <!-- Hero -->
+            <main class="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-8 lg:pt-10">
+                <div class="grid min-h-[82vh] items-center gap-14 lg:grid-cols-2">
+
+                    <!-- Left -->
+                    <section class="relative">
+                        <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-[#F3E8FF] bg-white/70 px-4 py-2 text-sm font-medium text-[#A21CAF] backdrop-blur">
+                            <span class="h-2.5 w-2.5 rounded-full bg-[#F472B6] shadow-[0_0_0_4px_rgba(244,114,182,0.15)]"></span>
+                            Diseñado para mujeres que crean, lideran y crecen
+                        </div>
+
+                        <h1 class="max-w-2xl text-5xl font-extrabold leading-[0.98] tracking-tight text-[#1F2937] md:text-6xl lg:text-7xl">
+                            Haz crecer tu negocio con una imagen
+                            <span class="bg-gradient-to-r from-[#7C3AED] via-[#A855F7] to-[#F472B6] bg-clip-text text-transparent">
+                                elegante, suave y poderosa
+                            </span>
+                        </h1>
+
+                        <p class="mt-7 max-w-xl text-lg leading-8 text-[#6B7280] md:text-xl">
+                            Organiza tus ventas, conecta con tus clientes y presenta tu marca con una experiencia
+                            visual más femenina, moderna y profesional desde el primer vistazo.
+                        </p>
+
+                        <div class="mt-10 flex flex-col gap-4 sm:flex-row">
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" 
-                                   class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 hover-glow font-medium">
-                                    Registrarse
+                                <a href="{{ route('register') }}"
+                                   class="rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] px-8 py-4 text-center font-semibold text-white shadow-[0_16px_40px_rgba(124,58,237,0.28)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(124,58,237,0.34)]">
+                                    Empieza hoy
                                 </a>
                             @endif
-                        @endauth
-                    </div>
-                </nav>
-            @endif
-        </header>
 
-        <!-- Hero Section -->
-        <main class="min-h-screen flex items-center justify-center px-6">
-            <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div class="space-y-8">
-                    <h1 class="text-5xl lg:text-6xl font-bold text-white leading-tight">
-                        Potencia tu 
-                        <span class="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
-                            negocio
-                        </span>
-                        en línea
-                    </h1>
-                    
-                    <p class="text-xl text-gray-300 leading-relaxed">
-                        La plataforma todo en uno para emprendedores y clientes. 
-                        Gestiona tu negocio, vende productos y conecta con tu audiencia 
-                        en un solo lugar.
-                    </p>
+                            <a href="#beneficios"
+                               class="rounded-full border border-[#E9D5FF] bg-white/80 px-8 py-4 text-center font-semibold text-[#374151] backdrop-blur transition duration-300 hover:border-[#C4B5FD] hover:bg-white">
+                                Ver beneficios
+                            </a>
+                        </div>
 
-                    <!-- CTA Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ route('register') }}" 
-                           class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-all duration-300 hover-glow font-semibold text-center">
-                            Comenzar Gratis
-                        </a>
-                        <a href="#features" 
-                           class="px-8 py-4 border border-gray-600 hover:border-indigo-500 text-gray-300 hover:text-white rounded-xl transition-all duration-300 font-semibold text-center">
-                            Conocer Más
-                        </a>
-                    </div>
-
-                    <!-- Features List -->
-                    <div class="grid grid-cols-2 gap-6 pt-8">
-                        <div class="flex items-center space-x-3">
-                            <div class="feature-icon w-8 h-8 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <span class="text-gray-300">Gestión fácil</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="feature-icon w-8 h-8 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <span class="text-gray-300">Ventas online</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="feature-icon w-8 h-8 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <span class="text-gray-300">Clientes felices</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="feature-icon w-8 h-8 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <span class="text-gray-300">Crecimiento</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Content - Graphic -->
-                <div class="relative">
-                    <div class="card-glass rounded-2xl p-8 lg:p-12">
-                        <div class="space-y-6">
-                            <!-- Stats Cards -->
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-gray-800/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl font-bold text-white">500+</div>
-                                    <div class="text-sm text-gray-400">Emprendedores</div>
+                        <div class="mt-12 grid gap-4 sm:grid-cols-2" id="beneficios">
+                            <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
+                                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#C4B5FD] text-white">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
                                 </div>
-                                <div class="bg-gray-800/50 rounded-xl p-4 text-center">
-                                    <div class="text-2xl font-bold text-white">10K+</div>
-                                    <div class="text-sm text-gray-400">Clientes</div>
-                                </div>
+                                <p class="font-semibold text-[#1F2937]">Gestión clara</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Todo más simple y visual para tu día a día.</p>
                             </div>
-                            
-                            <!-- Feature Illustration -->
-                            <div class="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-xl p-6 border border-indigo-500/20">
-                                <div class="text-center space-y-3">
-                                    <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mx-auto">
-                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                        </svg>
+
+                            <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
+                                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#F472B6] to-[#C4B5FD] text-white">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold text-[#1F2937]">Ventas digitales</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Impulsa tus ingresos con una presencia atractiva.</p>
+                            </div>
+
+                            <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
+                                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#A78BFA] to-[#F472B6] text-white">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold text-[#1F2937]">Clientes felices</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Genera confianza con una imagen delicada y profesional.</p>
+                            </div>
+
+                            <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
+                                <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#F472B6] text-white">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold text-[#1F2937]">Crecimiento real</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Una experiencia pensada para vender mejor y escalar.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Right -->
+                    <section class="relative">
+                        <div class="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/65 p-6 shadow-[0_20px_60px_rgba(124,58,237,0.12)] backdrop-blur-xl md:p-8 lg:p-10">
+                            <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.45),rgba(255,255,255,0.08))]"></div>
+                            <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#E9D5FF]/70 blur-2xl"></div>
+                            <div class="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#FBCFE8]/70 blur-2xl"></div>
+
+                            <div class="relative">
+                                <div class="mb-5 inline-flex items-center rounded-full bg-[#FCE7F3] px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-[#BE185D]">
+                                    Bienvenida
+                                </div>
+
+                                <h2 class="max-w-sm text-3xl font-bold leading-tight text-[#1F2937] md:text-4xl">
+                                    Una plataforma bonita también puede vender más
+                                </h2>
+
+                                <p class="mt-4 max-w-md text-base leading-7 text-[#6B7280]">
+                                    Convierte tu presencia digital en una experiencia más cálida, confiable y memorable.
+                                </p>
+
+                                <div class="mt-8 space-y-4">
+                                    <div class="rounded-[1.6rem] border border-[#F3E8FF] bg-white/90 p-5 shadow-sm">
+                                        <div class="mb-3 flex items-center justify-between">
+                                            <p class="text-sm font-medium text-[#6B7280]">Conexión rápida</p>
+                                            <span class="rounded-full bg-[#F3E8FF] px-3 py-1 text-xs font-semibold text-[#7C3AED]">
+                                                Activo
+                                            </span>
+                                        </div>
+                                        <h3 class="text-2xl font-semibold text-[#1F2937]">Ventas digitales</h3>
+                                        <p class="mt-2 text-sm leading-6 text-[#6B7280]">
+                                            Presenta tus productos y servicios con una estética cuidada y atractiva.
+                                        </p>
                                     </div>
-                                    <h3 class="font-semibold text-white">Crecimiento Rápido</h3>
-                                    <p class="text-sm text-gray-400">Impulsa tu negocio con nuestras herramientas</p>
+
+                                    <div class="rounded-[1.6rem] border border-[#FCE7F3] bg-gradient-to-r from-white to-[#FFF1F7] p-5 shadow-sm">
+                                        <div class="mb-3 flex items-center justify-between">
+                                            <p class="text-sm font-medium text-[#6B7280]">Organización clara</p>
+                                            <span class="rounded-full bg-[#FCE7F3] px-3 py-1 text-xs font-semibold text-[#DB2777]">
+                                                Fluido
+                                            </span>
+                                        </div>
+                                        <h3 class="text-2xl font-semibold text-[#1F2937]">Clientes felices</h3>
+                                        <p class="mt-2 text-sm leading-6 text-[#6B7280]">
+                                            Mejora la experiencia de tus clientas con una interfaz amable y profesional.
+                                        </p>
+                                    </div>
+
+                                    <div class="rounded-[1.8rem] border border-[#E9D5FF] bg-gradient-to-r from-[#FAF5FF] via-[#FFF7FB] to-[#FDF2F8] p-6 shadow-[0_16px_40px_rgba(244,114,182,0.10)]">
+                                        <div class="flex items-end justify-between gap-6">
+                                            <div>
+                                                <p class="text-sm font-medium text-[#6B7280]">Hazlo tuyo</p>
+                                                <h3 class="mt-2 max-w-xs text-2xl font-semibold text-[#1F2937]">
+                                                    Crea una marca delicada, firme y memorable
+                                                </h3>
+                                            </div>
+
+                                            <div class="text-right">
+                                                <p class="text-4xl font-extrabold bg-gradient-to-r from-[#7C3AED] to-[#F472B6] bg-clip-text text-transparent">
+                                                    +80%
+                                                </p>
+                                                <p class="mt-1 text-sm text-[#6B7280]">
+                                                    de emprendedoras conectan mejor
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 grid grid-cols-3 gap-3">
+                                    <div class="rounded-2xl bg-white/80 p-4 text-center">
+                                        <p class="text-2xl font-bold text-[#7C3AED]">24/7</p>
+                                        <p class="mt-1 text-xs text-[#6B7280]">gestión</p>
+                                    </div>
+                                    <div class="rounded-2xl bg-white/80 p-4 text-center">
+                                        <p class="text-2xl font-bold text-[#F472B6]">+95%</p>
+                                        <p class="mt-1 text-xs text-[#6B7280]">claridad</p>
+                                    </div>
+                                    <div class="rounded-2xl bg-white/80 p-4 text-center">
+                                        <p class="text-2xl font-bold text-[#7C3AED]">∞</p>
+                                        <p class="mt-1 text-xs text-[#6B7280]">potencial</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Floating Elements -->
-                    <div class="absolute -top-4 -right-4 w-8 h-8 bg-purple-500 rounded-full opacity-20 animate-pulse"></div>
-                    <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-indigo-500 rounded-full opacity-30 animate-pulse delay-1000"></div>
+                    </section>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </body>
 </html>
