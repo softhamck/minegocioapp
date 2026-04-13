@@ -3,10 +3,10 @@
         <div class="flex items-center space-x-3">
             <div>
                 <h2 class="text-xl font-semibold text-[#1F2937]">
-                    Agregar Producto
+                    Editar Negocio
                 </h2>
                 <p class="text-sm text-[#6B7280]">
-                    {{ $business->name }} - Completa la información del nuevo producto
+                    Modifica la información de tu establecimiento
                 </p>
             </div>
         </div>
@@ -22,12 +22,12 @@
         <div class="relative z-10 max-w-4xl mx-auto">
             <!-- Back Button -->
             <div class="mb-6">
-                <a href="{{ route('emprendedor.business.products.index', $business) }}" 
+                <a href="{{ route('emprendedor.business.show', $business) }}" 
                    class="inline-flex items-center rounded-full border border-[#E9D5FF] bg-white/80 px-5 py-2.5 text-sm font-medium text-[#374151] transition-all duration-300 hover:bg-[#FAF5FF] hover:text-[#7C3AED] group">
                     <svg class="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Volver a Productos
+                    Volver al Negocio
                 </a>
             </div>
 
@@ -39,44 +39,43 @@
                 <div class="relative p-6 sm:p-8">
                     <div class="flex items-center gap-2 mb-6">
                         <div class="h-6 w-1 rounded-full bg-gradient-to-b from-[#7C3AED] to-[#F472B6]"></div>
-                        <h3 class="text-lg font-bold text-[#1F2937]">Información del Producto</h3>
+                        <h3 class="text-lg font-bold text-[#1F2937]">Información del Negocio</h3>
                     </div>
 
-                    <form action="{{ route('emprendedor.business.products.store', $business) }}"
-                          method="POST" enctype="multipart/form-data"
-                          class="space-y-6">
-
+                    <form action="{{ route('emprendedor.business.update', $business) }}" method="POST" class="space-y-6">
                         @csrf
+                        @method('PUT')
 
-                        <!-- Product Name -->
+                        <!-- Nombre del Negocio -->
                         <div>
                             <label for="name" class="block text-sm font-medium text-[#374151] mb-2">
-                                Nombre del Producto <span class="text-[#E11D48]">*</span>
+                                Nombre del Negocio <span class="text-[#E11D48]">*</span>
                             </label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                     <svg class="h-5 w-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                     </svg>
                                 </div>
-                                <input type="text" 
-                                       id="name"
-                                       name="name" 
-                                       value="{{ old('name') }}"
-                                       placeholder="Ej: Camiseta Premium, Café Especial"
-                                       class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-10 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
-                                       required
-                                       autofocus>
+                                <input 
+                                    type="text" 
+                                    id="name"
+                                    name="name" 
+                                    value="{{ old('name', $business->name) }}"
+                                    placeholder="Ej: Mi Tienda Online, Restaurante Familiar"
+                                    class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-10 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
+                                    required
+                                    autofocus>
                             </div>
                             @error('name')
                                 <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <!-- Description -->
+                        <!-- Descripción -->
                         <div>
                             <label for="description" class="block text-sm font-medium text-[#374151] mb-2">
-                                Descripción
+                                Descripción del Negocio <span class="text-[#E11D48]">*</span>
                             </label>
                             <div class="relative">
                                 <div class="pointer-events-none absolute left-3 top-3">
@@ -88,95 +87,82 @@
                                     id="description"
                                     name="description" 
                                     rows="4"
-                                    placeholder="Describe las características, beneficios y detalles del producto..."
+                                    placeholder="Describe tu negocio, los productos o servicios que ofreces, tu misión, etc."
                                     class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-10 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200 resize-none"
-                                >{{ old('description') }}</textarea>
+                                    required
+                                >{{ old('description', $business->description) }}</textarea>
                             </div>
-                            <div class="mt-1 flex justify-between">
-                                <p class="text-xs text-[#6B7280]">Incluye detalles que ayuden a vender tu producto</p>
-                                <span id="charCount" class="text-xs text-[#6B7280]">0/1000</span>
-                            </div>
-                        </div>
-
-                        <!-- Price and Quantity -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Price -->
-                            <div>
-                                <label for="price" class="block text-sm font-medium text-[#374151] mb-2">
-                                    Precio <span class="text-[#E11D48]">*</span>
-                                </label>
-                                <div class="relative">
-                                    <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]">$</span>
-                                    <input type="number" 
-                                           id="price"
-                                           name="price" 
-                                           value="{{ old('price') }}"
-                                           placeholder="0.00"
-                                           step="0.01"
-                                           min="0"
-                                           class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-8 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
-                                           required>
-                                </div>
-                                @error('price')
-                                    <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- Quantity -->
-                            <div>
-                                <label for="quantity" class="block text-sm font-medium text-[#374151] mb-2">
-                                    Cantidad en Stock <span class="text-[#E11D48]">*</span>
-                                </label>
-                                <input type="number" 
-                                       id="quantity"
-                                       name="quantity" 
-                                       value="{{ old('quantity') }}"
-                                       placeholder="0"
-                                       min="0"
-                                       class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 px-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
-                                       required>
-                                @error('quantity')
-                                    <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <!-- Image Upload -->
-                        <div>
-                            <label class="block text-sm font-medium text-[#374151] mb-2">
-                                Imagen del Producto
-                            </label>
-                            <div class="rounded-xl border-2 border-dashed border-[#E9D5FF] bg-white/60 p-6 text-center transition-all duration-200 hover:border-[#C4B5FD]">
-                                <input type="file" 
-                                       id="image"
-                                       name="image" 
-                                       class="hidden"
-                                       accept="image/*">
-                                <label for="image" class="cursor-pointer">
-                                    <div id="imagePreview" class="flex flex-col items-center">
-                                        <svg class="mx-auto h-12 w-12 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                        <p class="mt-2 text-sm text-[#6B7280]">Haz clic para subir una imagen</p>
-                                        <p class="text-xs text-[#9CA3AF]">PNG, JPG, JPEG hasta 5MB</p>
-                                    </div>
-                                </label>
-                            </div>
-                            @error('image')
+                            @error('description')
                                 <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
                             @enderror
+                            <div class="mt-1 flex justify-between">
+                                <p class="text-xs text-[#6B7280]">Sé específico para atraer a tus clientes ideales</p>
+                                <span id="charCount" class="text-xs text-[#6B7280]">{{ strlen($business->description ?? '') }}/500</span>
+                            </div>
                         </div>
 
-                        <!-- Status -->
+                        <!-- Teléfono -->
                         <div>
-                            <label for="active" class="block text-sm font-medium text-[#374151] mb-2">
-                                Estado del Producto
+                            <label for="telephone" class="block text-sm font-medium text-[#374151] mb-2">
+                                Teléfono de Contacto <span class="text-[#E11D48]">*</span>
                             </label>
-                            <select id="active"
-                                    name="active" 
+                            <div class="relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <svg class="h-5 w-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="tel" 
+                                    id="telephone"
+                                    name="telephone" 
+                                    value="{{ old('telephone', $business->telephone) }}"
+                                    placeholder="Ej: +57 300 123 4567"
+                                    class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-10 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
+                                    required>
+                            </div>
+                            @error('telephone')
+                                <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
+                            @enderror
+                            <p class="mt-1 text-xs text-[#6B7280]">Incluye código de país para clientes internacionales</p>
+                        </div>
+
+                        <!-- Dirección -->
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-[#374151] mb-2">
+                                Dirección del Establecimiento
+                            </label>
+                            <div class="relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <svg class="h-5 w-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="address"
+                                    name="address" 
+                                    value="{{ old('address', $business->address) }}"
+                                    placeholder="Ej: Calle 123 #45-67, Ciudad, País"
+                                    class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-10 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200">
+                            </div>
+                            @error('address')
+                                <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
+                            @enderror
+                            <p class="mt-1 text-xs text-[#6B7280]">Opcional - Para negocios con ubicación física</p>
+                        </div>
+
+                        <!-- Estado -->
+                        <div>
+                            <label for="is_active" class="block text-sm font-medium text-[#374151] mb-2">
+                                Estado del Negocio
+                            </label>
+                            <select id="is_active"
+                                    name="is_active" 
                                     class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 px-4 text-[#1F2937] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200">
-                                <option value="1" selected>🟢 Activo - Visible para clientes</option>
-                                <option value="0">🔴 Inactivo - No visible para clientes</option>
+                                <option value="1" {{ $business->is_active == 1 ? 'selected' : '' }}>🟢 Activo - Visible para clientes</option>
+                                <option value="0" {{ $business->is_active == 0 ? 'selected' : '' }}>🔴 Inactivo - No visible para clientes</option>
                             </select>
                         </div>
 
@@ -187,10 +173,10 @@
                                 <svg class="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                Crear Producto
+                                Actualizar Negocio
                             </button>
                             
-                            <a href="{{ route('emprendedor.business.products.index', $business) }}"
+                            <a href="{{ route('emprendedor.business.show', $business) }}"
                                class="flex-1 rounded-full border border-[#E9D5FF] bg-white/80 px-8 py-3 text-center font-semibold text-[#374151] transition-all duration-300 hover:bg-[#FAF5FF] hover:text-[#7C3AED] flex items-center justify-center group">
                                 <svg class="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -208,32 +194,32 @@
                     <svg class="h-5 w-5 text-[#F472B6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
-                    <h4 class="text-lg font-semibold text-[#1F2937]">Consejos para tu Producto</h4>
+                    <h4 class="text-lg font-semibold text-[#1F2937]">Consejos para tu Negocio</h4>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div class="flex items-start space-x-3">
                         <div class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED]/20 to-[#F472B6]/20">
                             <span class="text-xs font-bold text-[#7C3AED]">1</span>
                         </div>
-                        <p class="text-[#6B7280]">Usa un nombre claro y descriptivo que capte la atención</p>
+                        <p class="text-[#6B7280]">Mantén la información actualizada para tus clientes</p>
                     </div>
                     <div class="flex items-start space-x-3">
                         <div class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED]/20 to-[#F472B6]/20">
                             <span class="text-xs font-bold text-[#7C3AED]">2</span>
                         </div>
-                        <p class="text-[#6B7280]">Incluye una imagen de calidad para mejorar la presentación</p>
+                        <p class="text-[#6B7280]">Un teléfono activo genera más confianza en los clientes</p>
                     </div>
                     <div class="flex items-start space-x-3">
                         <div class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED]/20 to-[#F472B6]/20">
                             <span class="text-xs font-bold text-[#7C3AED]">3</span>
                         </div>
-                        <p class="text-[#6B7280]">Define un precio competitivo acorde al mercado</p>
+                        <p class="text-[#6B7280]">La dirección ayuda a clientes locales a encontrarte fácilmente</p>
                     </div>
                     <div class="flex items-start space-x-3">
                         <div class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#7C3AED]/20 to-[#F472B6]/20">
                             <span class="text-xs font-bold text-[#7C3AED]">4</span>
                         </div>
-                        <p class="text-[#6B7280]">Mantén actualizado el stock para evitar confusiones</p>
+                        <p class="text-[#6B7280]">Un negocio activo siempre tendrá más visibilidad</p>
                     </div>
                 </div>
             </div>
@@ -242,16 +228,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Character counter for description
             const descriptionTextarea = document.getElementById('description');
             const charCount = document.getElementById('charCount');
             
             if (descriptionTextarea && charCount) {
                 const updateCharCount = () => {
                     const length = descriptionTextarea.value.length;
-                    charCount.textContent = `${length}/1000`;
+                    charCount.textContent = `${length}/500`;
                     
-                    if (length > 900) {
+                    if (length > 450) {
                         charCount.classList.add('text-[#EC4899]');
                         charCount.classList.remove('text-[#6B7280]');
                     } else {
@@ -262,25 +247,6 @@
                 
                 descriptionTextarea.addEventListener('input', updateCharCount);
                 updateCharCount();
-            }
-
-            // File upload preview
-            const fileInput = document.getElementById('image');
-            const imagePreview = document.getElementById('imagePreview');
-            
-            if (fileInput && imagePreview) {
-                fileInput.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        imagePreview.innerHTML = `
-                            <svg class="mx-auto h-12 w-12 text-[#7C3AED]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <p class="mt-2 text-sm font-medium text-[#7C3AED]">Archivo seleccionado</p>
-                            <p class="text-xs text-[#6B7280]">${file.name}</p>
-                        `;
-                    }
-                });
             }
         });
     </script>

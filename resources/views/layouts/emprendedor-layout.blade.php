@@ -70,30 +70,30 @@
                         <!-- Desktop Navigation -->
                         <nav class="hidden items-center gap-2 sm:flex">
                             <x-nav-link
-                                :href="url('emprendedor/dashboard')"
-                                :active="request()->is('emprendedor/dashboard')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/dashboard') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.dashboard')"
+                                :active="request()->routeIs('emprendedor.dashboard')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.dashboard') ? 'nav-link-active' : '' }}">
                                 Dashboard
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="url('emprendedor/business')"
-                                :active="request()->is('emprendedor/business*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/business*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.business.index')"
+                                :active="request()->routeIs('emprendedor.business.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.business.*') ? 'nav-link-active' : '' }}">
                                 Mis Negocios
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="url('emprendedor/products')"
-                                :active="request()->is('emprendedor/products*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/products*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.products.index')"
+                                :active="request()->routeIs('emprendedor.products.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.products.*') ? 'nav-link-active' : '' }}">
                                 Productos
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="url('emprendedor/orders')"
-                                :active="request()->is('emprendedor/orders*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/orders*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.orders.index')"
+                                :active="request()->routeIs('emprendedor.orders.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.orders.*') ? 'nav-link-active' : '' }}">
                                 Pedidos
                             </x-nav-link>
 
@@ -176,10 +176,10 @@
 
                                         <div class="my-2 border-t border-[#F3E8FF]"></div>
 
-                                        <x-dropdown-link :href="url('emprendedor/dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Dashboard</x-dropdown-link>
-                                        <x-dropdown-link :href="url('emprendedor/business')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mis Negocios</x-dropdown-link>
-                                        <x-dropdown-link :href="url('emprendedor/products')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
-                                        <x-dropdown-link :href="url('emprendedor/orders')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Pedidos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Dashboard</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.business.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mis Negocios</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.products.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.orders.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Pedidos</x-dropdown-link>
 
                                         <x-dropdown-link :href="route('profile.edit')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mi perfil</x-dropdown-link>
 
