@@ -13,7 +13,7 @@ use App\Http\Controllers\Cliente\CartClientController;
 use App\Http\Controllers\Cliente\OrderClientController;
 use App\Http\Controllers\Cliente\ProductClientController;
 use App\Http\Controllers\Cliente\StoreClientController;
-
+use App\Http\Controllers\Cliente\CartController;
 
 // Página pública
 Route::get('/', function () {
@@ -32,15 +32,17 @@ Route::get('/redirect-role', function () {
     switch ($user->rol_id) {
         case 1:
             return redirect()->route('admin.dashboard');
+
         case 2:
             return redirect()->route('emprendedor.dashboard');
+
         case 3:
             return redirect()->route('cliente.dashboard');
+
         default:
             return redirect('/');
     }
 })->middleware(['auth'])->name('redirect.role');
-
 
 // Perfil
 Route::middleware('auth')->group(function () {
@@ -49,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 // Dashboard por Rol
 
 // ADMIN (rol_id = 1) - Rutas completas
@@ -57,7 +58,6 @@ Route::middleware(['auth', 'role:1'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('dashboard');
@@ -70,23 +70,30 @@ Route::middleware(['auth', 'role:1'])
         Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-        // Productos
+        // CRUD Productos (COMPLETO)
         Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
         // Pedidos
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+        Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
     });
-
 
 // EMPRENDEDOR (rol_id = 2)
 Route::middleware(['auth', 'role:2'])
     ->prefix('emprendedor')
     ->name('emprendedor.')
     ->group(function () {
-
         // Dashboard
         Route::get('/dashboard', [\App\Http\Controllers\Emprendedor\EmprendedorDashboardController::class, 'index'])
             ->name('dashboard');
+
+        Route::get('/products', [\App\Http\Controllers\Emprendedor\ProductController::class, 'allProducts'])
+            ->name('products.all');
 
         // CRUD Negocios
         Route::get('/business', [BusinessController::class, 'index'])->name('business.index');
@@ -101,12 +108,10 @@ Route::middleware(['auth', 'role:2'])
         Route::get('/orders', [\App\Http\Controllers\Emprendedor\OrderController::class, 'index'])
             ->name('orders.index');
 
-
         // PRODUCTOS POR NEGOCIO
         Route::prefix('business/{business}')
             ->name('business.')
             ->group(function () {
-
                 Route::get('/products', [\App\Http\Controllers\Emprendedor\ProductController::class, 'index'])
                     ->name('products.index');
 
@@ -127,54 +132,31 @@ Route::middleware(['auth', 'role:2'])
             });
     });
 
-
-
-
-
-
-    // CLIENTE (rol_id = 3)
+// CLIENTE (rol_id = 3)
 Route::middleware(['auth', 'role:3'])
     ->prefix('cliente')
     ->name('cliente.')
     ->group(function () {
-
-        // Dashboard del cliente
+        // Dashboard
         Route::get('/dashboard', function () {
             return view('cliente.dashboard');
         })->name('dashboard');
 
-        // Catálogo general de productos
-        Route::get('/productos', [ProductClientController::class, 'index'])
-            ->name('productos.index');
+        // Catálogo de productos
+        Route::get('/productos', [ProductClientController::class, 'index'])->name('productos.index');
+        Route::get('/productos/{product}', [ProductClientController::class, 'show'])->name('productos.show');
 
-        Route::get('/productos/{id}', [ProductClientController::class, 'show'])
-            ->name('productos.show');
+        // Carrito de compras
+        Route::get('/carrito', [CartController::class, 'index'])->name('carrito.index');
+        Route::post('/carrito/{productId}/add', [CartController::class, 'add'])->name('carrito.add');
+        Route::patch('/carrito/{productId}/update', [CartController::class, 'update'])->name('carrito.update');
+        Route::delete('/carrito/{productId}/remove', [CartController::class, 'remove'])->name('carrito.remove');
+        Route::delete('/carrito/clear', [CartController::class, 'clear'])->name('carrito.clear');
 
-        Route::get('/productos/{store}/{product}', [ProductClientController::class, 'show'])->name('productos.show');
-
-        // Ver tiendas / emprendedores
-        Route::get('/tiendas', [StoreClientController::class, 'index'])
-            ->name('tiendas.index');
-
-        Route::get('/tiendas/{store}', [StoreClientController::class, 'show'])
-            ->name('tiendas.show');
-
-        // Carrito
-        Route::get('/carrito', [CartClientController::class, 'index'])
-            ->name('carrito.index');
-
-        Route::post('/carrito/{product}/add', [CartClientController::class, 'add'])
-            ->name('carrito.add');
-
-        Route::delete('/carrito/{product}/remove', [CartClientController::class, 'remove'])
-            ->name('carrito.remove');
-
-        // Crear pedido
-        Route::post('/pedido', [OrderClientController::class, 'store'])
-            ->name('pedido.store');
+        // Pedidos del cliente
+        Route::get('/pedidos', [\App\Http\Controllers\Cliente\OrderController::class, 'index'])->name('pedidos.index');
+        Route::get('/pedidos/{order}', [\App\Http\Controllers\Cliente\OrderController::class, 'show'])->name('pedidos.show');        
     });
 
-
-
 // Autenticación (Laravel Breeze)
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

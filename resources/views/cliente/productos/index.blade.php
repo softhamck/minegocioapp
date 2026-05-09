@@ -18,13 +18,6 @@
                         </div>
                         <p class="mt-1 text-[#6B7280]">Descubre todos los productos disponibles</p>
                     </div>
-                    
-                    <!-- Mini Stats (2,1,0) -->
-                    <div class="mt-4 flex gap-3 sm:mt-0">
-                        <div class="rounded-full bg-white/70 px-4 py-1.5 text-sm font-semibold text-[#7C3AED] shadow-sm">2 Productos Totales</div>
-                        <div class="rounded-full bg-white/70 px-4 py-1.5 text-sm font-semibold text-[#7C3AED] shadow-sm">1 Tiendas Activas</div>
-                        <div class="rounded-full bg-white/70 px-4 py-1.5 text-sm font-semibold text-[#7C3AED] shadow-sm">0 Categorías</div>
-                    </div>
                 </div>
 
             <!-- Search and Filters -->

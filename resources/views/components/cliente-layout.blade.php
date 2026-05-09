@@ -97,10 +97,9 @@
                                 </x-nav-link>
 
                                 <x-nav-link
-                                    :href="url('cliente.pedidos.index')"
-                                    :active="request()->is('cliente/pedidos*')"
-                                    class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('cliente/pedidos*') ? 'nav-link-active' : '' }}"
-                                >
+                                    :href="route('cliente.pedidos.index')"
+                                    :active="request()->routeIs('cliente.pedidos.*')"
+                                    class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('cliente.pedidos.*') ? 'nav-link-active' : '' }}">
                                     Mis pedidos
                                 </x-nav-link>
 

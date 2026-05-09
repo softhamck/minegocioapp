@@ -1,9 +1,9 @@
-<x-app-layout>
+<x-emprendedor-layout>
     <x-slot name="header">
         <div class="flex items-center space-x-3">
             <div>
                 <h2 class="text-xl font-semibold text-[#1F2937]">
-                    Gestión de Pedidos
+                    Mis Pedidos
                 </h2>
             </div>
         </div>
@@ -48,7 +48,6 @@
                                 </svg>
                             </div>
                             <input type="text" 
-                                   name="search" 
                                    id="searchInput"
                                    value="{{ request('search') }}"
                                    placeholder="Buscar por ID, cliente o email..."
@@ -57,6 +56,15 @@
                     </div>
 
                     <div class="flex flex-wrap gap-3">
+                        <select id="businessFilter" class="rounded-full border border-[#F3E8FF] bg-white/80 px-5 py-3 text-sm font-medium text-[#374151] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40">
+                            <option value="">Todos los negocios</option>
+                            @foreach($businesses as $business)
+                                <option value="{{ $business->id }}" {{ request('business_id') == $business->id ? 'selected' : '' }}>
+                                    {{ $business->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
                         <select id="statusFilter" class="rounded-full border border-[#F3E8FF] bg-white/80 px-5 py-3 text-sm font-medium text-[#374151] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40">
                             <option value="">Todos los estados</option>
                             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>⏳ Pendiente</option>
@@ -69,7 +77,7 @@
                             Filtrar
                         </button>
                         
-                        <a href="{{ route('admin.orders.index') }}" class="rounded-full border border-[#E9D5FF] bg-white/80 px-6 py-3 text-sm font-medium text-[#374151] transition-all duration-300 hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                        <a href="{{ route('emprendedor.orders.index') }}" class="rounded-full border border-[#E9D5FF] bg-white/80 px-6 py-3 text-sm font-medium text-[#374151] transition-all duration-300 hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                             Limpiar
                         </a>
                     </div>
@@ -131,7 +139,7 @@
                                 <td class="px-6 py-4 text-sm text-[#6B7280]">{{ $order->created_at->format('d/m/Y H:i') }}</td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('admin.orders.show', $order->id) }}" 
+                                        <a href="{{ route('emprendedor.orders.show', $order->id) }}" 
                                            class="rounded-lg p-2 text-[#7C3AED] hover:bg-[#F3E8FF] transition-colors" 
                                            title="Ver detalles">
                                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,10 +178,12 @@
     <script>
         document.getElementById('filterBtn')?.addEventListener('click', function() {
             const search = document.getElementById('searchInput')?.value || '';
+            const businessId = document.getElementById('businessFilter')?.value || '';
             const status = document.getElementById('statusFilter')?.value || '';
             
             let url = new URL(window.location.href);
             url.searchParams.set('search', search);
+            url.searchParams.set('business_id', businessId);
             url.searchParams.set('status', status);
             
             window.location.href = url.toString();
@@ -185,4 +195,4 @@
             }
         });
     </script>
-</x-app-layout>
+</x-emprendedor-layout>

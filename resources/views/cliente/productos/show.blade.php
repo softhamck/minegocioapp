@@ -1,175 +1,222 @@
 <x-cliente-layout>
     <x-slot name="header">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.22)]">
+                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
             </div>
             <div>
-                <h2 class="text-xl font-semibold text-white">
+                <h2 class="text-xl font-semibold text-[#1F2937]">
                     Detalle del Producto
                 </h2>
-                <p class="text-gray-400 text-sm">
+                <p class="text-sm text-[#6B7280]">
                     Información completa del producto
                 </p>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-6 px-4 sm:px-6">
-        <div class="max-w-6xl mx-auto">
-            <!-- Back Button -->
+    <div class="relative overflow-hidden py-6 sm:py-8 px-4 sm:px-6 bg-[radial-gradient(circle_at_top_left,_rgba(196,181,253,0.22),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(244,114,182,0.16),_transparent_30%),linear-gradient(135deg,#FDF4FF_0%,#FCF7FF_45%,#FFF7FB_100%)] min-h-screen">
+        
+        <!-- Elementos decorativos -->
+        <div class="pointer-events-none absolute -top-16 -left-16 h-72 w-72 rounded-full bg-[#C4B5FD]/30 blur-3xl"></div>
+        <div class="pointer-events-none absolute top-1/3 -right-20 h-80 w-80 rounded-full bg-[#F472B6]/15 blur-3xl"></div>
+        <div class="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-[#E9D5FF]/30 blur-3xl"></div>
+
+        <div class="relative z-10 max-w-6xl mx-auto">
+            <!-- Botón volver -->
             <div class="mb-6">
-                <a href="{{ route('cliente.productos.index') }}" 
-                   class="inline-flex items-center glass-card border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white px-6 py-3 rounded-xl transition-all duration-300 font-medium group">
-                    <svg class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                <a href="{{ url()->previous() }}" 
+                   class="inline-flex items-center rounded-full border border-[#E9D5FF] bg-white/80 px-5 py-2.5 text-sm font-medium text-[#374151] transition-all duration-300 hover:bg-[#FAF5FF] hover:text-[#7C3AED] group">
+                    <svg class="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Volver al Catálogo
+                    Volver
                 </a>
             </div>
 
-            <div class="glass-card rounded-2xl overflow-hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
-                    <!-- Product Images -->
-                    <div class="space-y-4">
-                        <!-- Main Image -->
-                        <div class="bg-gray-800/30 rounded-2xl p-4 border border-gray-700/50">
-                            @if($product->image)
+            <!-- Product Detail Card -->
+            <div class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 backdrop-blur">
+                <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#FBCFE8]/60 blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#E9D5FF]/60 blur-2xl"></div>
+                
+                <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 sm:p-8">
+                    <!-- Imagen del Producto -->
+                    <div class="flex items-center justify-center">
+                        <div class="w-full max-w-md overflow-hidden rounded-2xl bg-gradient-to-br from-[#F3E8FF] to-[#FCE7F3] p-4">
+                            @if($product->image && Illuminate\Support\Facades\Storage::disk('public')->exists($product->image))
                                 <img src="{{ asset('storage/' . $product->image) }}" 
                                      alt="{{ $product->name }}"
-                                     class="w-full h-80 object-cover rounded-xl bg-gray-700">
+                                     class="h-auto w-full rounded-xl object-cover shadow-lg">
                             @else
-                                <div class="w-full h-80 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center">
-                                    <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                <div class="flex h-96 w-full items-center justify-center">
+                                    <svg class="h-32 w-32 text-[#C4B5FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                                     </svg>
                                 </div>
                             @endif
                         </div>
-
-                        <!-- Store Info -->
-                        <div class="glass-card rounded-xl p-4 border border-blue-500/20">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p class="text-gray-400 text-sm">Vendido por</p>
-                                    <p class="text-white font-semibold">{{ $product->business->name }}</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Product Details -->
-                    <div class="space-y-6">
-                        <!-- Product Header -->
+                    <!-- Información del Producto -->
+                    <div class="flex flex-col space-y-4">
+                        <!-- Nombre y Negocio -->
                         <div>
-                            <h1 class="text-3xl font-bold text-white mb-2">{{ $product->name }}</h1>
-                            
-                            <!-- Status Badges -->
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                @if($product->quantity == 0)
-                                    <span class="inline-flex items-center px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-medium">
-                                        <span class="w-2 h-2 bg-red-400 rounded-full mr-2"></span>
-                                        Agotado
-                                    </span>
-                                @elseif($product->quantity <= 5)
-                                    <span class="inline-flex items-center px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-medium">
-                                        <span class="w-2 h-2 bg-orange-400 rounded-full mr-2"></span>
-                                        Últimas {{ $product->quantity }} unidades
-                                    </span>
-                                @else
-                                    <span class="inline-flex items-center px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
-                                        <span class="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
-                                        En stock
-                                    </span>
-                                @endif
+                            <div class="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-[#7C3AED]/20 to-[#F472B6]/20 px-3 py-1 text-xs font-medium text-[#7C3AED]">
+                                {{ $product->business->name ?? 'Negocio' }}
                             </div>
-
-                            <!-- Price -->
-                            <div class="flex items-baseline space-x-2 mb-4">
-                                <span class="text-4xl font-bold text-white">${{ number_format($product->price, 0) }}</span>
-                                <span class="text-gray-400 text-lg">COP</span>
-                            </div>
+                            <h1 class="text-3xl font-extrabold text-[#1F2937]">{{ $product->name }}</h1>
                         </div>
 
-                        <!-- Description -->
+                        <!-- Precio -->
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-extrabold text-[#7C3AED]">${{ number_format($product->price, 0) }}</span>
+                            <span class="text-sm text-[#6B7280]">COP</span>
+                        </div>
+
+                        <!-- Descripción -->
                         @if($product->description)
-                            <div class="space-y-3">
-                                <h3 class="text-lg font-semibold text-white flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                                    </svg>
-                                    Descripción
-                                </h3>
-                                <p class="text-gray-300 leading-relaxed">{{ $product->description }}</p>
+                            <div class="border-t border-[#F3E8FF] pt-4">
+                                <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Descripción</h3>
+                                <p class="text-[#1F2937] leading-relaxed">{{ $product->description }}</p>
                             </div>
                         @endif
 
-                        <!-- Product Actions -->
-                        <div class="space-y-4 pt-6 border-t border-gray-700/50">
-                            <!-- Quantity Selector -->
+                        <!-- Stock -->
+                        <div class="border-t border-[#F3E8FF] pt-4">
                             <div class="flex items-center justify-between">
-                                <span class="text-white font-medium">Cantidad</span>
-                                <div class="flex items-center space-x-3">
-                                    <button class="w-10 h-10 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center justify-center">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                                        </svg>
-                                    </button>
-                                    <span class="text-white font-semibold text-lg w-8 text-center">1</span>
-                                    <button class="w-10 h-10 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200 flex items-center justify-center">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Action Buttons -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <button class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white py-4 rounded-xl transition-all duration-300 hover-glow font-semibold flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
-                                        {{ $product->quantity == 0 ? 'disabled' : '' }}>
-                                    <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                    </svg>
-                                    Agregar al Carrito
-                                </button>
-
-                                <button class="w-full glass-card border-2 border-green-600 hover:border-green-500 text-green-400 hover:text-green-300 py-4 rounded-xl transition-all duration-300 font-semibold flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
-                                        {{ $product->quantity == 0 ? 'disabled' : '' }}>
-                                    <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                                    </svg>
-                                    Comprar Ahora
-                                </button>
+                                <span class="text-sm font-medium text-[#6B7280]">Disponibilidad:</span>
+                                @if($product->quantity > 0)
+                                    <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-700">
+                                        <span class="mr-1 h-2 w-2 rounded-full bg-green-600"></span>
+                                        {{ $product->quantity }} unidades disponibles
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-sm font-medium text-red-700">
+                                        <span class="mr-1 h-2 w-2 rounded-full bg-red-600"></span>
+                                        Agotado
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
-                        <!-- Additional Info -->
-                        <div class="glass-card rounded-xl p-4 border border-gray-700/50">
-                            <div class="grid grid-cols-2 gap-4 text-sm">
-                                <div class="text-center">
-                                    <div class="text-green-400 font-semibold">🛡️</div>
-                                    <div class="text-white font-medium">Garantía</div>
-                                    <div class="text-gray-400">30 días</div>
+                        <!-- Formulario de Cantidad y Agregar al Carrito -->
+                        @if($product->quantity > 0)
+                            <form action="{{ route('cliente.carrito.add', $product->id) }}" method="POST" class="border-t border-[#F3E8FF] pt-4">
+                            @csrf
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <label for="quantity" class="text-sm font-medium text-[#374151]">Cantidad:</label>
+                                        <div class="flex items-center border border-[#F3E8FF] rounded-full bg-white/80">
+                                            <button type="button" onclick="decrementQuantity()" 
+                                                    class="rounded-l-full px-3 py-2 text-[#7C3AED] hover:bg-[#F3E8FF] transition-colors">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                                </svg>
+                                            </button>
+                                            <input type="number" 
+                                                name="quantity" 
+                                                id="quantity"
+                                                value="1" 
+                                                min="1" 
+                                                max="{{ $product->quantity }}"
+                                                class="w-16 text-center border-0 bg-transparent py-2 text-[#1F2937] focus:outline-none">
+                                            <button type="button" onclick="incrementQuantity()" 
+                                                    class="rounded-r-full px-3 py-2 text-[#7C3AED] hover:bg-[#F3E8FF] transition-colors">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" 
+                                            class="flex-1 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] px-6 py-3 font-semibold text-white transition-all duration-300 hover:from-[#6D28D9] hover:to-[#EC4899] hover:shadow-[0_12px_30px_rgba(124,58,237,0.25)]">
+                                        <svg class="mr-2 inline h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        Agregar al Carrito
+                                    </button>
                                 </div>
-                                <div class="text-center">
-                                    <div class="text-blue-400 font-semibold">🚚</div>
-                                    <div class="text-white font-medium">Envío</div>
-                                    <div class="text-gray-400">Gratis</div>
-                                </div>
+                            </form>
+                        @else
+                            <div class="border-t border-[#F3E8FF] pt-4">
+                                <button disabled 
+                                        class="w-full rounded-full bg-gray-300 px-6 py-3 font-semibold text-white cursor-not-allowed">
+                                    <svg class="mr-2 inline h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    Producto Agotado
+                                </button>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
+
+            <!-- Productos Relacionados -->
+            @if($relatedProducts && $relatedProducts->count() > 0)
+                <div class="mt-12">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="h-6 w-1 rounded-full bg-gradient-to-b from-[#7C3AED] to-[#F472B6]"></div>
+                        <h3 class="text-xl font-bold text-[#1F2937]">Productos Relacionados</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        @foreach($relatedProducts as $related)
+                            <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(124,58,237,0.12)]">
+                                <div class="relative mb-3 h-40 w-full overflow-hidden rounded-xl">
+                                    @if($related->image && Illuminate\Support\Facades\Storage::disk('public')->exists($related->image))
+                                        <img src="{{ asset('storage/' . $related->image) }}" 
+                                             class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    @else
+                                        <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#F3E8FF] to-[#FCE7F3]">
+                                            <svg class="h-10 w-10 text-[#C4B5FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
+                                <h4 class="font-bold text-[#1F2937] line-clamp-1">{{ $related->name }}</h4>
+                                <p class="text-xl font-extrabold text-[#7C3AED] mt-2">${{ number_format($related->price, 0) }}</p>
+                                <a href="{{ route('cliente.productos.show', $related) }}" 
+                                   class="mt-3 block w-full rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:from-[#6D28D9] hover:to-[#EC4899]">
+                                    Ver Detalle
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
+
+    <script>
+        function decrementQuantity() {
+            const input = document.getElementById('quantity');
+            const currentValue = parseInt(input.value);
+            const minValue = parseInt(input.min);
+            if (currentValue > minValue) {
+                input.value = currentValue - 1;
+            }
+        }
+        
+        function incrementQuantity() {
+            const input = document.getElementById('quantity');
+            const currentValue = parseInt(input.value);
+            const maxValue = parseInt(input.max);
+            if (currentValue < maxValue) {
+                input.value = currentValue + 1;
+            }
+        }
+    </script>
+
+    <style>
+        .line-clamp-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </x-cliente-layout>

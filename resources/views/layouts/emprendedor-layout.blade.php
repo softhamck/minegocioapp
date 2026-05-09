@@ -84,9 +84,9 @@
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="route('emprendedor.products.index')"
-                                :active="request()->routeIs('emprendedor.products.*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.products.*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.products.all')"
+                                :active="request()->routeIs('emprendedor.products.all')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.products.all') ? 'nav-link-active' : '' }}">
                                 Productos
                             </x-nav-link>
 
@@ -178,7 +178,7 @@
 
                                         <x-dropdown-link :href="route('emprendedor.dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Dashboard</x-dropdown-link>
                                         <x-dropdown-link :href="route('emprendedor.business.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mis Negocios</x-dropdown-link>
-                                        <x-dropdown-link :href="route('emprendedor.products.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.products.all')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
                                         <x-dropdown-link :href="route('emprendedor.orders.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Pedidos</x-dropdown-link>
 
                                         <x-dropdown-link :href="route('profile.edit')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mi perfil</x-dropdown-link>

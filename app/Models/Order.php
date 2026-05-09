@@ -7,39 +7,48 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-   use HasFactory;
+    use HasFactory;
 
     protected $table = 'orders';
+
     protected $fillable = [
-        'business_id',        
-        'user_id',        
-        'order_statuses_id', 
-        'order_number',       
-        'total'
+        'user_id',
+        'business_id',
+        'total',
+        'status',
+        'shipping_address',
+        'payment_method',
+        'payment_status',
+        'notes'
     ];
 
+    protected $casts = [
+        'total' => 'decimal:2',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    // Relación con el cliente (usuario)
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Relación con el negocio
     public function business()
     {
-        return $this->belongsTo(Business::class, 'business_id'); 
+        return $this->belongsTo(Business::class, 'business_id');
     }
 
-    public function users()
-    {
-        return $this->belongsTo(Customer::class, 'user_id'); 
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(OrderStatus::class, 'order_statuses_id');
-    }
-
+    // Relación con los detalles del pedido
     public function details()
     {
-        return $this->hasMany(OrderDetail::class, 'order_id'); 
+        return $this->hasMany(OrderDetail::class, 'order_id');
     }
-
-    public function payments_details()
+    
+    // Alias para mantener compatibilidad
+    public function customer()
     {
-        return $this->hasMany(Payment::class, 'order_id'); 
+        return $this->user();
     }
 }
