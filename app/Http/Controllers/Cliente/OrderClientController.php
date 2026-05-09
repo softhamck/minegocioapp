@@ -1,51 +1,68 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Cliente;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
-use App\Models\OrderDetail;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function store(Request $request)
+    /**
+     * Display a listing of the user's orders.
+     */
+    public function index(Request $request)
     {
-        $cart = session()->get('cart', []);
+        $query = Order::where('user_id', Auth::id())
+            ->with(['business', 'details.product'])
+            ->latest();
 
-        if(empty($cart)) {
-            return back()->with('error', 'El carrito está vacío.');
+        // Filtrar por estado
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
         }
 
-        // Todos los productos deben ser del mismo negocio (MVP)
-        $businessId = collect($cart)->pluck('business_id')->unique()->first();
+        $orders = $query->paginate(10);
+        $statuses = ['pending', 'processing', 'completed', 'cancelled'];
 
-        $order = Order::create([
-            'business_id'       => $businessId,
-            'user_id'           => auth()->id(),
-            'order_statuses_id' => 1, // pendiente
-            'order_number'      => Str::upper(Str::random(8)),
-            'total'             => collect($cart)->sum(fn($i) => $i['price'] * $i['quantity'])
-        ]);
-
-        foreach ($cart as $item) {
-            OrderDetail::create([
-                'order_id'   => $order->id,
-                'product_id' => $item['id'],
-                'quantity'   => $item['quantity'],
-                'unit_price' => $item['price'],
-            ]);
-        }
-
-        session()->forget('cart');
-
-        return redirect()->route('cliente.pedido.show', $order->id);
+        return view('cliente.pedidos.index', compact('orders', 'statuses'));
     }
 
-    public function show($order)
+    /**
+     * Display the specified order.
+     */
+    public function show(Order $order)
     {
-        $order = Order::where('user_id', auth()->id())->findOrFail($order);
-        return view('cliente.pedido.show', compact('order'));
+        // Verificar que el pedido pertenece al usuario autenticado
+        if ($order->user_id !== Auth::id()) {
+            abort(403, 'No tienes permiso para ver este pedido');
+        }
+
+        $order->load(['business', 'details.product']);
+
+        return view('cliente.pedidos.show', compact('order'));
+    }
+
+    /**
+     * Cancel the specified order.
+     */
+    public function cancel(Order $order)
+    {
+        // Verificar que el pedido pertenece al usuario autenticado
+        if ($order->user_id !== Auth::id()) {
+            abort(403, 'No tienes permiso para cancelar este pedido');
+        }
+
+        // Solo se pueden cancelar pedidos pendientes o en proceso
+        if (!in_array($order->status, ['pending', 'processing'])) {
+            return redirect()->route('cliente.pedidos.show', $order)
+                ->with('error', 'No se puede cancelar un pedido que ya está completado o cancelado.');
+        }
+
+        $order->update(['status' => 'cancelled']);
+
+        return redirect()->route('cliente.pedidos.show', $order)
+            ->with('success', 'Pedido cancelado correctamente.');
     }
 }

@@ -10,13 +10,27 @@ class OrderDetail extends Model
     use HasFactory;
 
     protected $table = 'order_details';
-    protected $fillable = ['orden_id', 'product_id', 'quantity', 'unitPrice', 'total'];
 
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'quantity',
+        'price',
+        'subtotal'
+    ];
+
+    protected $casts = [
+        'price' => 'decimal:2',
+        'subtotal' => 'decimal:2',
+    ];
+
+    // Relación con el pedido
     public function order()
     {
-        return $this->belongsTo(Order::class, 'orden_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
+    // Relación con el producto
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
