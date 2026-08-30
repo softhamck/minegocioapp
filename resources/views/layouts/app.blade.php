@@ -110,6 +110,14 @@
                                     >
                                         Productos
                                     </x-nav-link>
+
+                                    <x-nav-link
+                                        :href="route('admin.reports.index')"
+                                        :active="request()->routeIs('admin.reports.*')"
+                                        class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('admin.reports.*') ? 'nav-link-active' : '' }}"
+                                    >
+                                        Reportes
+                                    </x-nav-link>
                                 @endif
 
                                 <!-- Dropdown usuario -->
@@ -221,6 +229,10 @@
 
                                                 <x-dropdown-link :href="route('admin.products.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                                                     Productos
+                                                </x-dropdown-link>
+
+                                                <x-dropdown-link :href="route('admin.reports.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                                                    Reportes
                                                 </x-dropdown-link>
                                             @endif
 
