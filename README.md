@@ -23,8 +23,11 @@ Actualmente el proyecto se encuentra en una etapa de **MVP funcional en desarrol
 - Catálogo de productos para clientes.
 - Visualización de detalle de productos.
 - Módulo de carrito de compras.
-- Creación y gestión inicial de pedidos.
+- Creación y gestión de pedidos, con estados (pendiente, en proceso, completado, cancelado).
 - Carga y visualización de imágenes.
+- Recuperación de contraseña (olvidé mi contraseña / restablecer contraseña).
+- Mensajes de validación, autenticación y paginación en español.
+- Módulo de Informes para Administrador y Emprendedor (ingresos, pedidos por estado, productos más vendidos, ventas de los últimos 6 meses).
 - Interfaz visual con estilo moderno, femenino y elegante.
 
 ---
@@ -42,6 +45,7 @@ Funciones principales:
 - Gestionar productos.
 - Revisar pedidos.
 - Actualizar estado de pedidos.
+- Ver informes generales del sistema (ingresos, pedidos por estado, productos más vendidos, ventas mensuales).
 - Eliminar registros cuando sea necesario.
 
 ### Emprendedor
@@ -55,6 +59,7 @@ Funciones principales:
 - Crear, editar, visualizar y eliminar productos por negocio.
 - Consultar productos.
 - Consultar pedidos relacionados con su actividad.
+- Ver informes de su(s) negocio(s) (ingresos, pedidos por estado, productos más vendidos, ventas mensuales).
 
 ### Cliente
 
@@ -79,6 +84,12 @@ Funciones principales:
 
 El proyecto utiliza autenticación con Laravel Breeze.  
 Después de iniciar sesión, el usuario es redirigido automáticamente a su panel correspondiente según su rol.
+
+Incluye registro, inicio de sesión, recuperación de contraseña (envío de enlace por correo) y restablecimiento de contraseña, con una interfaz visual consistente en todas las pantallas del flujo.
+
+### Informes
+
+Panel de métricas para Administrador (a nivel de toda la plataforma) y Emprendedor (a nivel de sus propios negocios): ingresos totales, pedidos por estado, productos más vendidos y ventas de los últimos 6 meses.
 
 ### Administración
 
@@ -286,6 +297,20 @@ Si los seeders del proyecto crean usuarios de prueba, se pueden usar credenciale
 | GET | `/dashboard` | Redirección principal por rol |
 | GET | `/redirect-role` | Redirige al panel según el rol |
 
+### Autenticación
+
+| Método | Ruta | Descripción |
+| --- | --- | --- |
+| GET | `/register` | Formulario de registro |
+| POST | `/register` | Crear cuenta |
+| GET | `/login` | Formulario de inicio de sesión |
+| POST | `/login` | Iniciar sesión |
+| POST | `/logout` | Cerrar sesión |
+| GET | `/forgot-password` | Formulario para solicitar recuperación de contraseña |
+| POST | `/forgot-password` | Enviar enlace de recuperación por correo |
+| GET | `/reset-password/{token}` | Formulario para restablecer contraseña |
+| POST | `/reset-password` | Guardar nueva contraseña |
+
 ### Perfil
 
 | Método | Ruta | Descripción |
@@ -313,6 +338,7 @@ Si los seeders del proyecto crean usuarios de prueba, se pueden usar credenciale
 | GET | `/admin/orders/{order}` | Ver pedido |
 | PATCH | `/admin/orders/{order}/status` | Actualizar estado del pedido |
 | DELETE | `/admin/orders/{order}` | Eliminar pedido |
+| GET | `/admin/reports` | Informes generales del sistema |
 
 ### Emprendedor
 
@@ -328,6 +354,7 @@ Si los seeders del proyecto crean usuarios de prueba, se pueden usar credenciale
 | PUT | `/emprendedor/business/{business}` | Actualizar negocio |
 | DELETE | `/emprendedor/business/{business}` | Eliminar negocio |
 | GET | `/emprendedor/orders` | Ver pedidos del emprendedor |
+| GET | `/emprendedor/reports` | Informes de sus negocios |
 
 ### Productos por negocio
 
@@ -373,13 +400,11 @@ composer test
 
 ## 🚧 Próximas mejoras
 
-- Completar flujo de pedidos.
-- Mejorar dashboard con estadísticas.
-- Agregar reportes para administradores y emprendedores.
 - Implementar pasarela de pagos.
-- Agregar notificaciones.
+- Agregar notificaciones (nuevos pedidos, cambios de estado).
 - Mejorar filtros de búsqueda en catálogos.
-- Optimizar validaciones y mensajes al usuario.
+- Exportar informes a PDF/Excel.
+- Completar verificación de correo electrónico.
 - Mejorar documentación técnica del proyecto.
 
 ---
