@@ -212,17 +212,17 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center rounded-2xl border border-dashed border-[#E9D5FF] bg-white/60 p-4">
-                        <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#E9D5FF] text-[#7C3AED]">
+                    <a href="{{ route('emprendedor.reports.index') }}" class="flex items-center rounded-2xl border border-[#EEF2FF] bg-white/85 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md group">
+                        <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#E9D5FF] text-[#7C3AED] transition-transform duration-300 group-hover:scale-110">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <p class="font-medium text-[#1F2937]">Próximamente: Reportes detallados</p>
+                            <p class="font-medium text-[#1F2937] group-hover:text-[#7C3AED] transition-colors">Ver Reportes</p>
                             <p class="text-sm text-[#6B7280]">Visualiza tus ventas y crecimiento con métricas avanzadas.</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
