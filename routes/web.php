@@ -6,8 +6,10 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Emprendedor\BusinessController;
 use App\Http\Controllers\Emprendedor\EmprendedorDashboardController;
+use App\Http\Controllers\Emprendedor\ReportController as EmprendedorReportController;
 use App\Http\Controllers\Cliente\BusinessClientController;
 use App\Http\Controllers\Cliente\CartClientController;
 use App\Http\Controllers\Cliente\OrderClientController;
@@ -81,6 +83,9 @@ Route::middleware(['auth', 'role:1'])
         Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
         Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
         Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+        // Reportes
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     });
 
 // EMPRENDEDOR (rol_id = 2)
@@ -107,6 +112,10 @@ Route::middleware(['auth', 'role:2'])
         // Pedidos del emprendedor (si aplica)
         Route::get('/orders', [\App\Http\Controllers\Emprendedor\OrderController::class, 'index'])
             ->name('orders.index');
+
+        // Reportes del emprendedor
+        Route::get('/reports', [EmprendedorReportController::class, 'index'])
+            ->name('reports.index');
 
         // PRODUCTOS POR NEGOCIO
         Route::prefix('business/{business}')
