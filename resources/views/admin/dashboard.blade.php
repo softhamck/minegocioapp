@@ -85,7 +85,7 @@
                         </div>
                     </a>
                     
-                    <a href="#" 
+                    <a href="{{ route('admin.reports.index') }}"
                        class="flex items-center p-4 rounded-xl bg-gradient-to-r from-[#EC4899]/10 to-[#F472B6]/10 border border-[#FBCFE8]/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-[#EC4899] to-[#F472B6] shadow-md transition-transform duration-300 group-hover:scale-110 mr-3">
                             <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

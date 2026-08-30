@@ -97,6 +97,13 @@
                                 Pedidos
                             </x-nav-link>
 
+                            <x-nav-link
+                                :href="route('emprendedor.reports.index')"
+                                :active="request()->routeIs('emprendedor.reports.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.reports.*') ? 'nav-link-active' : '' }}">
+                                Reportes
+                            </x-nav-link>
+
                             <!-- Dropdown usuario -->
                             <div class="relative ml-2 dropdown-content">
                                 <x-dropdown align="right" width="56">
@@ -180,6 +187,7 @@
                                         <x-dropdown-link :href="route('emprendedor.business.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mis Negocios</x-dropdown-link>
                                         <x-dropdown-link :href="route('emprendedor.products.all')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
                                         <x-dropdown-link :href="route('emprendedor.orders.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Pedidos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.reports.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Reportes</x-dropdown-link>
 
                                         <x-dropdown-link :href="route('profile.edit')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mi perfil</x-dropdown-link>
 
