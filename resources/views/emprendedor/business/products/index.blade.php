@@ -56,8 +56,8 @@
                     <div class="text-sm font-semibold text-[#F59E0B]">Inactivos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(124,58,237,0.12)] text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">${{ number_format($products->sum('price'), 0) }}</div>
-                    <div class="text-sm font-semibold text-[#A855F7]">Valor Total</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">${{ number_format($products->sum(fn ($p) => $p->price * $p->quantity), 0) }}</div>
+                    <div class="text-sm font-semibold text-[#A855F7]">Valor del inventario</div>
                 </div>
             </div>
 

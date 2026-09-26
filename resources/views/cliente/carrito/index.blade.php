@@ -15,28 +15,6 @@
     <div class="relative overflow-hidden py-6 sm:py-8 px-4 sm:px-6 bg-[radial-gradient(circle_at_top_left,_rgba(196,181,253,0.22),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(244,114,182,0.16),_transparent_30%),linear-gradient(135deg,#FDF4FF_0%,#FCF7FF_45%,#FFF7FB_100%)] min-h-screen">
         
         <div class="relative z-10 max-w-6xl mx-auto">
-            @if(session('success'))
-                <div class="mb-6 rounded-2xl border border-green-300/60 bg-green-50/80 p-4 backdrop-blur">
-                    <div class="flex items-center text-green-700">
-                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {{ session('success') }}
-                    </div>
-                </div>
-            @endif
-
-            @if(session('error'))
-                <div class="mb-6 rounded-2xl border border-red-300/60 bg-red-50/80 p-4 backdrop-blur">
-                    <div class="flex items-center text-red-700">
-                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {{ session('error') }}
-                    </div>
-                </div>
-            @endif
-
             @if(empty($cart))
                 <!-- Carrito vacío -->
                 <div class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 p-12 text-center backdrop-blur">
@@ -166,7 +144,7 @@
                                     </div>
                                     <div class="flex justify-between">
                                         <span class="text-[#6B7280]">Envío</span>
-                                        <span class="font-semibold text-[#1F2937]">Por calcular</span>
+                                        <span class="font-semibold text-[#1F2937]">Se acuerda con la tienda</span>
                                     </div>
                                     <div class="border-t border-[#F3E8FF] pt-3">
                                         <div class="flex justify-between">
@@ -176,9 +154,13 @@
                                     </div>
                                 </div>
 
-                                <a href="#" class="mt-6 block w-full rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:from-[#6D28D9] hover:to-[#EC4899] hover:shadow-[0_12px_30px_rgba(124,58,237,0.25)]">
-                                    Proceder al Pago
-                                </a>
+                                <form method="POST" action="{{ route('cliente.carrito.checkout') }}" class="mt-6">
+                                    @csrf
+                                    <button type="submit" class="block w-full rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] px-6 py-3 text-center font-semibold text-white transition-all duration-300 hover:from-[#6D28D9] hover:to-[#EC4899] hover:shadow-[0_12px_30px_rgba(124,58,237,0.25)]">
+                                        Confirmar pedido
+                                    </button>
+                                </form>
+                                <p class="mt-3 text-center text-xs text-[#9CA3AF]">El pago y la entrega se acuerdan directamente con cada tienda.</p>
                             </div>
                         </div>
                     </div>

@@ -22,7 +22,7 @@
 
             <!-- Search and Filters -->
             <div class="glass-card rounded-2xl p-6 mb-8 bg-white/70 backdrop-blur border border-white/60">
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <form method="GET" action="{{ route('cliente.productos.index') }}" class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <!-- Search Bar -->
                     <div class="flex-1">
                         <div class="relative">
@@ -32,8 +32,10 @@
                                 </svg>
                             </div>
                             <input 
-                                type="text" 
-                                placeholder="Buscar productos..."
+                                type="search" 
+                                name="buscar"
+                                value="{{ request('buscar') }}"
+                                placeholder="Buscar productos... (Enter para buscar)"
                                 class="w-full bg-white/80 border border-[#F3E8FF] text-[#1F2937] placeholder-gray-500 rounded-full pl-10 pr-4 py-3 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20 transition-all duration-200"
                             >
                         </div>
@@ -41,21 +43,31 @@
 
                     <!-- Filters -->
                     <div class="flex flex-wrap gap-3">
-                        <select class="bg-white/80 border border-[#F3E8FF] text-[#374151] rounded-full px-5 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 text-sm">
-                            <option>Todas las tiendas</option>
+                        <select name="tienda" onchange="this.form.submit()" class="bg-white/80 border border-[#F3E8FF] text-[#374151] rounded-full px-5 py-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 text-sm">
+                            <option value="">Todas las tiendas</option>
                             @foreach($stores as $store)
-                                <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                <option value="{{ $store->id }}" @selected(request('tienda') == $store->id)>{{ $store->name }}</option>
                             @endforeach
                         </select>
 
-                        <select class="bg-white/80 border border-[#F3E8FF] text-[#374151] rounded-full px-5 py-3 focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 text-sm">
-                            <option>Ordenar por</option>
-                            <option>Precio: Menor a Mayor</option>
-                            <option>Precio: Mayor a Menor</option>
-                            <option>Nombre A-Z</option>
+                        <select name="orden" onchange="this.form.submit()" class="bg-white/80 border border-[#F3E8FF] text-[#374151] rounded-full px-5 py-3 focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 text-sm">
+                            <option value="">Más recientes</option>
+                            <option value="precio_asc" @selected(request('orden') === 'precio_asc')>Precio: Menor a Mayor</option>
+                            <option value="precio_desc" @selected(request('orden') === 'precio_desc')>Precio: Mayor a Menor</option>
+                            <option value="nombre" @selected(request('orden') === 'nombre')>Nombre A-Z</option>
                         </select>
+
+                        <button type="submit" class="rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] px-5 py-3 text-sm font-semibold text-white">
+                            Buscar
+                        </button>
+
+                        @if(request()->hasAny(['buscar', 'tienda', 'orden']))
+                            <a href="{{ route('cliente.productos.index') }}" class="rounded-full border border-[#E9D5FF] bg-white/80 px-5 py-3 text-sm font-medium text-[#6B7280] hover:text-[#7C3AED]">
+                                Limpiar
+                            </a>
+                        @endif
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- Products Grid -->
@@ -67,11 +79,16 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-[#1F2937] mb-3">No hay productos disponibles</h3>
-                    <p class="text-gray-600 mb-6">Pronto tendremos nuevos productos para ti</p>
-                    <a href="{{ route('cliente.tiendas.index') }}" 
+                    @if(request()->filled('buscar') || request()->filled('tienda'))
+                        <h3 class="text-2xl font-bold text-[#1F2937] mb-3">No encontramos productos</h3>
+                        <p class="text-gray-600 mb-6">Prueba con otra palabra o quita los filtros.</p>
+                    @else
+                        <h3 class="text-2xl font-bold text-[#1F2937] mb-3">No hay productos disponibles</h3>
+                        <p class="text-gray-600 mb-6">Pronto tendremos nuevos productos para ti</p>
+                    @endif
+                    <a href="{{ route('cliente.dashboard') }}" 
                        class="inline-flex items-center bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-8 py-3 rounded-full transition-all duration-300 font-semibold">
-                        Explorar Tiendas
+                        Volver al inicio
                     </a>
                 </div>
             @else

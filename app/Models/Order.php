@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -19,7 +20,9 @@ class Order extends Model
         'shipping_address',
         'payment_method',
         'payment_status',
-        'notes'
+        'notes',
+        'order_statuses_id',
+        'order_number',
     ];
 
     protected $casts = [
@@ -27,6 +30,28 @@ class Order extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * La tabla orders conserva la columna heredada order_statuses_id (obligatoria).
+     * Se mantiene sincronizada con la columna 'status' que usa la aplicación.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (Order $order) {
+            if ($order->isDirty('status') || empty($order->order_statuses_id)) {
+                $nombres = [
+                    'pending' => 'Pendiente',
+                    'processing' => 'Enviado',
+                    'completed' => 'Completado',
+                    'cancelled' => 'Cancelado',
+                ];
+                $nombre = $nombres[$order->status ?? 'pending'] ?? 'Pendiente';
+                // Si la tabla de estados está vacía en el servidor, se crea el estado que falte
+                $order->order_statuses_id = DB::table('order_statuses')->where('name', $nombre)->value('id')
+                    ?? DB::table('order_statuses')->insertGetId(['name' => $nombre]);
+            }
+        });
+    }
 
     // Relación con el cliente (usuario)
     public function user()

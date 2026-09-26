@@ -40,7 +40,12 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            // En hosting compartido sin soporte para `storage:link` (ej. InfinityFree),
+            // define SHARED_HOSTING_STORAGE=true en el .env para que las imágenes se
+            // guarden directamente dentro del document root, sin depender del enlace simbólico.
+            'root' => env('SHARED_HOSTING_STORAGE', false)
+                ? dirname(base_path()).'/storage'
+                : storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,

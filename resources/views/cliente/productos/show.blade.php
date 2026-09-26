@@ -1,18 +1,10 @@
 <x-cliente-layout>
     <x-slot name="header">
         <div class="flex items-center space-x-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.22)]">
-                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-            </div>
             <div>
                 <h2 class="text-xl font-semibold text-[#1F2937]">
                     Detalle del Producto
                 </h2>
-                <p class="text-sm text-[#6B7280]">
-                    Información completa del producto
-                </p>
             </div>
         </div>
     </x-slot>
@@ -27,12 +19,21 @@
         <div class="relative z-10 max-w-6xl mx-auto">
             <!-- Botón volver -->
             <div class="mb-6">
-                <a href="{{ url()->previous() }}" 
+                @php
+                    // Vuelve al catálogo conservando búsqueda y filtros si la clienta venía de ahí;
+                    // si no (entró directo o recargó la página), va al catálogo completo.
+                    $anterior = url()->previous();
+                    $catalogo = route('cliente.productos.index');
+                    $volverA = parse_url($anterior, PHP_URL_PATH) === parse_url($catalogo, PHP_URL_PATH)
+                        ? $anterior
+                        : $catalogo;
+                @endphp
+                <a href="{{ $volverA }}" 
                    class="inline-flex items-center rounded-full border border-[#E9D5FF] bg-white/80 px-5 py-2.5 text-sm font-medium text-[#374151] transition-all duration-300 hover:bg-[#FAF5FF] hover:text-[#7C3AED] group">
                     <svg class="mr-2 h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Volver
+                    Volver al catálogo
                 </a>
             </div>
 
@@ -80,6 +81,24 @@
                             <div class="border-t border-[#F3E8FF] pt-4">
                                 <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Descripción</h3>
                                 <p class="text-[#1F2937] leading-relaxed">{{ $product->description }}</p>
+                            </div>
+                        @endif
+
+                        <!-- Contacto de la tienda -->
+                        @if($product->business && $product->business->telephone)
+                            @php $wa = preg_replace('/\D+/', '', $product->business->telephone); if (strlen($wa) === 10) { $wa = '57' . $wa; } @endphp
+                            <div class="border-t border-[#F3E8FF] pt-4">
+                                <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Contacto de la tienda</h3>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="text-[#1F2937]">{{ $product->business->telephone }}</span>
+                                    <a href="https://wa.me/{{ $wa }}?text={{ urlencode('Hola, vi "' . $product->name . '" en MiNegocioApp') }}" target="_blank" rel="noopener"
+                                       class="inline-flex items-center rounded-full bg-green-500 px-4 py-1.5 text-sm font-semibold text-white hover:bg-green-600">
+                                        Escribir por WhatsApp
+                                    </a>
+                                </div>
+                                @if($product->business->address)
+                                    <p class="mt-2 text-sm text-[#6B7280]">{{ $product->business->address }}</p>
+                                @endif
                             </div>
                         @endif
 

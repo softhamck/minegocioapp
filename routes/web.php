@@ -10,12 +10,9 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Emprendedor\BusinessController;
 use App\Http\Controllers\Emprendedor\EmprendedorDashboardController;
 use App\Http\Controllers\Emprendedor\ReportController as EmprendedorReportController;
-use App\Http\Controllers\Cliente\BusinessClientController;
-use App\Http\Controllers\Cliente\CartClientController;
-use App\Http\Controllers\Cliente\OrderClientController;
 use App\Http\Controllers\Cliente\ProductClientController;
-use App\Http\Controllers\Cliente\StoreClientController;
 use App\Http\Controllers\Cliente\CartController;
+use App\Http\Controllers\Cliente\ClienteDashboardController;
 
 // Página pública
 Route::get('/', function () {
@@ -60,9 +57,7 @@ Route::middleware(['auth', 'role:1'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         // CRUD Usuarios
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -112,6 +107,10 @@ Route::middleware(['auth', 'role:2'])
         // Pedidos del emprendedor (si aplica)
         Route::get('/orders', [\App\Http\Controllers\Emprendedor\OrderController::class, 'index'])
             ->name('orders.index');
+        Route::get('/orders/{order}', [\App\Http\Controllers\Emprendedor\OrderController::class, 'show'])
+            ->name('orders.show');
+        Route::patch('/orders/{order}/status', [\App\Http\Controllers\Emprendedor\OrderController::class, 'updateStatus'])
+            ->name('orders.update-status');
 
         // Reportes del emprendedor
         Route::get('/reports', [EmprendedorReportController::class, 'index'])
@@ -147,9 +146,7 @@ Route::middleware(['auth', 'role:3'])
     ->name('cliente.')
     ->group(function () {
         // Dashboard
-        Route::get('/dashboard', function () {
-            return view('cliente.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [ClienteDashboardController::class, 'index'])->name('dashboard');
 
         // Catálogo de productos
         Route::get('/productos', [ProductClientController::class, 'index'])->name('productos.index');
@@ -157,6 +154,7 @@ Route::middleware(['auth', 'role:3'])
 
         // Carrito de compras
         Route::get('/carrito', [CartController::class, 'index'])->name('carrito.index');
+        Route::post('/carrito/checkout', [CartController::class, 'checkout'])->name('carrito.checkout');
         Route::post('/carrito/{productId}/add', [CartController::class, 'add'])->name('carrito.add');
         Route::patch('/carrito/{productId}/update', [CartController::class, 'update'])->name('carrito.update');
         Route::delete('/carrito/{productId}/remove', [CartController::class, 'remove'])->name('carrito.remove');
@@ -164,7 +162,8 @@ Route::middleware(['auth', 'role:3'])
 
         // Pedidos del cliente
         Route::get('/pedidos', [\App\Http\Controllers\Cliente\OrderController::class, 'index'])->name('pedidos.index');
-        Route::get('/pedidos/{order}', [\App\Http\Controllers\Cliente\OrderController::class, 'show'])->name('pedidos.show');        
+        Route::get('/pedidos/{order}', [\App\Http\Controllers\Cliente\OrderController::class, 'show'])->name('pedidos.show');
+        Route::patch('/pedidos/{order}/cancel', [\App\Http\Controllers\Cliente\OrderController::class, 'cancel'])->name('pedidos.cancel');        
     });
 
 // Autenticación (Laravel Breeze)
