@@ -141,35 +141,52 @@ Características visuales:
 
 ---
 
-## 📁 Estructura general del proyecto
+## 🏗️ Arquitectura (MVC)
+
+El proyecto sigue el patrón **Modelo-Vista-Controlador** de Laravel:
+
+- **Modelos** (`app/Models`): representan las tablas y sus relaciones.
+- **Vistas** (`resources/views`): plantillas Blade organizadas por rol.
+- **Controladores** (`app/Http/Controllers`): reciben la petición, aplican la lógica y devuelven la vista. Están separados por rol.
+- **Rutas** (`routes/web.php`): conectan cada URL con su controlador y protegen cada grupo con el middleware de rol.
 
 ```text
 minegocioapp/
 ├── app/
-│   └── Http/
-│       └── Controllers/
-│           ├── Admin/
-│           ├── Cliente/
-│           └── Emprendedor/
-├── bootstrap/
-├── config/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/          # Panel, usuarios, productos, pedidos e informes generales
+│   │   │   ├── Emprendedor/    # Panel, negocios, productos, pedidos e informes de la emprendedora
+│   │   │   ├── Cliente/        # Panel, catálogo, carrito (confirmar pedido) y pedidos de la clienta
+│   │   │   ├── Auth/           # Registro, inicio de sesión y recuperación de contraseña (Breeze)
+│   │   │   └── ProfileController.php
+│   │   ├── Middleware/         # RoleMiddleware y RedirectBasedOnRole
+│   │   ├── Requests/           # Validaciones de formularios
+│   │   └── Responses/          # Redirección por rol después del login
+│   ├── Models/                 # User, Role, Business, Product, Order, OrderDetail, OrderStatus,
+│   │                           # Customer, Metric, Reminder, PaymentDetail, Cart
+│   ├── Providers/              # AppServiceProvider y ClienteServiceProvider (contador del carrito)
+│   └── View/Components/        # Layouts de componentes (app y guest)
 ├── database/
-│   ├── factories/
-│   ├── migrations/
-│   └── seeders/
-├── public/
+│   ├── migrations/             # Estructura de la base de datos
+│   └── seeders/                # Datos de prueba
 ├── resources/
-│   ├── css/
-│   ├── js/
-│   └── views/
+│   ├── views/
+│   │   ├── admin/              # Vistas del administrador
+│   │   ├── emprendedor/        # Vistas de la emprendedora
+│   │   ├── cliente/            # Vistas de la clienta
+│   │   ├── auth/  profile/     # Autenticación y perfil
+│   │   ├── components/         # Layouts por rol y componentes reutilizables
+│   │   ├── layouts/            # Layouts de administrador e invitado
+│   │   ├── partials/           # Mensajes de confirmación y error compartidos
+│   │   └── welcome.blade.php   # Página de inicio
+│   ├── lang/es/                # Mensajes en español
+│   ├── css/  js/
 ├── routes/
-│   ├── web.php
-│   └── auth.php
-├── storage/
-├── tests/
-├── composer.json
-├── package.json
-└── README.md
+│   ├── web.php                 # Rutas por rol (admin, emprendedor, cliente)
+│   └── auth.php                # Rutas de autenticación
+├── tests/Feature/              # Pruebas automáticas (FlujoPreEncuestaTest: ciclo completo)
+└── public/                     # Punto de entrada y archivos públicos
 ```
 
 ---
@@ -354,6 +371,8 @@ Si los seeders del proyecto crean usuarios de prueba, se pueden usar credenciale
 | PUT | `/emprendedor/business/{business}` | Actualizar negocio |
 | DELETE | `/emprendedor/business/{business}` | Eliminar negocio |
 | GET | `/emprendedor/orders` | Ver pedidos del emprendedor |
+| GET | `/emprendedor/orders/{order}` | Detalle del pedido |
+| PATCH | `/emprendedor/orders/{order}/status` | Cambiar estado del pedido |
 | GET | `/emprendedor/reports` | Informes de sus negocios |
 
 ### Productos por negocio
@@ -379,6 +398,10 @@ Si los seeders del proyecto crean usuarios de prueba, se pueden usar credenciale
 | PATCH | `/cliente/carrito/{productId}/update` | Actualizar cantidad |
 | DELETE | `/cliente/carrito/{productId}/remove` | Eliminar producto del carrito |
 | DELETE | `/cliente/carrito/clear` | Vaciar carrito |
+| POST | `/cliente/carrito/checkout` | Confirmar pedido (un pedido por tienda) |
+| GET | `/cliente/pedidos` | Mis pedidos |
+| GET | `/cliente/pedidos/{order}` | Detalle del pedido |
+| PATCH | `/cliente/pedidos/{order}/cancel` | Cancelar pedido pendiente |
 
 ---
 

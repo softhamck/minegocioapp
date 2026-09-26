@@ -34,17 +34,21 @@ class ProductController extends Controller
             'description'=> 'nullable|string',
             'price'      => 'required|numeric|min:0',
             'quantity'   => 'required|integer|min:0',
-            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'active'     => 'boolean',
+        ], [
+            'image.max' => 'La foto pesa demasiado. El máximo es 5 MB.',
+            'image.image' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
+            'image.mimes' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
         ]);
 
         $data = [
             'name' => $validated['name'],
-            'description' => $validated['description'],
+            'description' => $validated['description'] ?? '',
             'price' => $validated['price'],
             'quantity' => $validated['quantity'],
             'business_id' => $business->id,
-            'active' => $request->has('active') ? 1 : 0,
+            'active' => $request->boolean('active'),
         ];
 
         if ($request->hasFile('image')) {
@@ -76,16 +80,20 @@ class ProductController extends Controller
             'description'=> 'nullable|string',
             'price'      => 'required|numeric|min:0',
             'quantity'   => 'required|integer|min:0',
-            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'active'     => 'boolean',
+        ], [
+            'image.max' => 'La foto pesa demasiado. El máximo es 5 MB.',
+            'image.image' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
+            'image.mimes' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
         ]);
 
         $data = [
             'name' => $validated['name'],
-            'description' => $validated['description'],
+            'description' => $validated['description'] ?? '',
             'price' => $validated['price'],
             'quantity' => $validated['quantity'],
-            'active' => $request->has('active') ? 1 : 0,
+            'active' => $request->boolean('active'),
         ];
 
         if ($request->hasFile('image')) {
@@ -127,9 +135,9 @@ class ProductController extends Controller
         $businessIds = Auth::user()->businesses()->pluck('id');
         
         // Query base de productos
+        // Sin ->latest() aquí: si se ordena primero por fecha, los otros órdenes no tienen efecto
         $query = Product::whereIn('business_id', $businessIds)
-            ->with('business')
-            ->latest();
+            ->with('business');
         
         // Búsqueda
         if ($request->filled('search')) {
@@ -170,7 +178,7 @@ class ProductController extends Controller
                 break;
         }
         
-        $products = $query->paginate(12);
+        $products = $query->paginate(12)->withQueryString();
         $businesses = Auth::user()->businesses;
         
         return view('emprendedor.products.all', compact('products', 'businesses'));

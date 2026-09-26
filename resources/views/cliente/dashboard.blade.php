@@ -54,7 +54,7 @@
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
                 <!-- Pedidos Realizados -->
-                <a href="{{ url('cliente.pedidos.index') }}"
+                <a href="{{ route('cliente.pedidos.index') }}"
                    class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-6 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(124,58,237,0.12)]">
                     <div class="flex items-start justify-between mb-5">
                         <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-md transition duration-300 group-hover:scale-110">
@@ -67,18 +67,15 @@
                             <div class="text-3xl font-extrabold text-[#1F2937]">
                                 {{ $totalOrders ?? '0' }}
                             </div>
-                            <div class="text-sm font-medium text-emerald-500">
-                                +5% este mes
-                            </div>
                         </div>
                     </div>
 
                     <h3 class="text-lg font-bold text-[#1F2937] mb-2">Pedidos realizados</h3>
-                    <p class="text-sm leading-6 text-[#6B7280]">Compras completadas exitosamente.</p>
+                    <p class="text-sm leading-6 text-[#6B7280]">Pedidos que la tienda marcó como completados.</p>
                 </a>
 
                 <!-- Pedidos Pendientes -->
-                <a href="{{ url('cliente.pedidos.index') }}?status=pending"
+                <a href="{{ route('cliente.pedidos.index') }}?status=pending"
                    class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-6 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(124,58,237,0.12)]">
                     <div class="flex items-start justify-between mb-5">
                         <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-amber-400 to-yellow-500 text-white shadow-md transition duration-300 group-hover:scale-110">
@@ -115,13 +112,13 @@
                                 ${{ number_format($totalSpent ?? 0, 0) }}
                             </div>
                             <div class="text-sm font-medium text-[#7C3AED]">
-                                Total invertido
+                                Total comprado
                             </div>
                         </div>
                     </div>
 
                     <h3 class="text-lg font-bold text-[#1F2937] mb-2">Total gastado</h3>
-                    <p class="text-sm leading-6 text-[#6B7280]">Tu inversión acumulada en productos.</p>
+                    <p class="text-sm leading-6 text-[#6B7280]">Suma de tus pedidos completados.</p>
                 </div>
             </div>
 
@@ -137,7 +134,7 @@
                     </span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- Explorar Productos -->
                     <a href="{{ route('cliente.productos.index') }}"
                        class="group rounded-[1.5rem] border border-[#E9D5FF] bg-white/85 p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(124,58,237,0.10)]">
@@ -151,7 +148,7 @@
                     </a>
 
                     <!-- Mi Carrito -->
-                    <a href="{{ url('cliente.carrito.index') }}"
+                    <a href="{{ route('cliente.carrito.index') }}"
                        class="group rounded-[1.5rem] border border-[#E9D5FF] bg-white/85 p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(124,58,237,0.10)]">
                         <div class="relative mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-400 to-green-500 text-white shadow-lg transition duration-300 group-hover:scale-110">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,7 +165,7 @@
                     </a>
 
                     <!-- Mis Pedidos -->
-                    <a href="{{ url('cliente.pedidos.index') }}"
+                    <a href="{{ route('cliente.pedidos.index') }}"
                        class="group rounded-[1.5rem] border border-[#E9D5FF] bg-white/85 p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(124,58,237,0.10)]">
                         <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white shadow-lg transition duration-300 group-hover:scale-110">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,17 +176,6 @@
                         <p class="text-xs leading-5 text-[#6B7280]">Consulta tu historial y el estado de tus compras.</p>
                     </a>
 
-                    <!-- Favoritos -->
-                    <a href="{{ url('cliente.favoritos.index') }}"
-                       class="group rounded-[1.5rem] border border-[#E9D5FF] bg-white/85 p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(124,58,237,0.10)]">
-                        <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-[#F472B6] to-rose-500 text-white shadow-lg transition duration-300 group-hover:scale-110">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </div>
-                        <h4 class="font-semibold text-[#1F2937] mb-1">Favoritos</h4>
-                        <p class="text-xs leading-5 text-[#6B7280]">Guarda productos para revisarlos después.</p>
-                    </a>
                 </div>
             </div>
 
@@ -204,26 +190,28 @@
                 </div>
 
                 <div class="space-y-4">
-                    <div class="flex items-center rounded-2xl border border-[#EEF2FF] bg-white/85 p-4">
-                        <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-sky-100 text-sky-500">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    @forelse(($recentOrders ?? collect()) as $order)
+                        <a href="{{ route('cliente.pedidos.show', $order) }}" class="flex items-center rounded-2xl border border-[#EEF2FF] bg-white/85 p-4 transition hover:border-[#E9D5FF]">
+                            <div class="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-sky-100 text-sky-500">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-[#1F2937]">Pedido #{{ $order->id }} · {{ $order->business->name ?? 'Tienda' }}</p>
+                                <p class="text-sm text-[#6B7280]">{{ $order->created_at->format('d/m/Y') }} · {{ ['pending'=>'Pendiente','processing'=>'En proceso','completed'=>'Completado','cancelled'=>'Cancelado'][$order->status] ?? $order->status }}</p>
+                            </div>
+                            <span class="text-sm font-semibold text-[#7C3AED]">${{ number_format($order->total, 0, ',', '.') }}</span>
+                        </a>
+                    @empty
+                        <div class="rounded-[1.5rem] border border-dashed border-[#E9D5FF] bg-white/60 px-6 py-10 text-center">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-[#C4B5FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
+                            <p class="text-[#6B7280] mb-2 font-medium">Aún no tienes actividad</p>
+                            <p class="text-sm text-[#9CA3AF]">Tus pedidos aparecerán aquí cuando hagas tu primera compra.</p>
                         </div>
-                        <div class="flex-1">
-                            <p class="font-medium text-[#1F2937]">Pedido completado</p>
-                            <p class="text-sm text-[#6B7280]">Producto: Camiseta Premium</p>
-                        </div>
-                        <span class="text-sm font-semibold text-emerald-500">+$45.00</span>
-                    </div>
-
-                    <div class="rounded-[1.5rem] border border-dashed border-[#E9D5FF] bg-white/60 px-6 py-10 text-center">
-                        <svg class="w-16 h-16 mx-auto mb-4 text-[#C4B5FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <p class="text-[#6B7280] mb-2 font-medium">No hay más actividad reciente</p>
-                        <p class="text-sm text-[#9CA3AF]">Tu historial aparecerá aquí a medida que uses la plataforma.</p>
-                    </div>
+                    @endforelse
                 </div>
             </div>
         </div>

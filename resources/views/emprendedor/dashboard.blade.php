@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center space-x-3">
             <div>
-                <h2 class="text-xl font-semibold text-[#1F2937]">Panel del Emprendedor</h2>
+                <h2 class="text-xl font-semibold text-[#1F2937]">Panel de la emprendedora</h2>
             </div>
         </div>
     </x-slot>
@@ -25,7 +25,7 @@
                         </div>
 
                         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#1F2937] mb-3">
-                            ¡Bienvenido, {{ Auth::user()->name }}! 🚀
+                            ¡Bienvenida, {{ Auth::user()->name }}! 🚀
                         </h1>
 
                         <p class="text-[#6B7280] text-base sm:text-lg leading-7 mb-4 max-w-2xl">
@@ -35,10 +35,7 @@
 
                         <div class="flex flex-wrap gap-2">
                             <span class="rounded-full bg-[#F3E8FF] px-3 py-1 text-sm font-semibold text-[#7C3AED]">
-                                💼 Emprendedor
-                            </span>
-                            <span class="rounded-full bg-white px-3 py-1 text-sm font-medium text-[#6B7280] border border-[#E9D5FF]">
-                                📈 Negocio Activo
+                                💼 Emprendedora
                             </span>
                             @if($businessCount > 0)
                             <span class="rounded-full bg-gradient-to-r from-[#7C3AED]/20 to-[#F472B6]/20 px-3 py-1 text-sm font-medium text-[#7C3AED] border border-[#E9D5FF]">
@@ -164,16 +161,17 @@
                         <p class="text-xs leading-5 text-[#6B7280]">Revisa y gestiona pedidos</p>
                     </a>
 
-                    <!-- Analytics (Próximamente) -->
-                    <div class="rounded-[1.5rem] border border-[#E9D5FF] bg-white/85 p-5 text-center opacity-70 cursor-not-allowed">
-                        <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-[#F472B6] to-rose-500 text-white shadow-lg">
+                    <!-- Informes -->
+                    <a href="{{ route('emprendedor.reports.index') }}"
+                       class="group rounded-[1.5rem] border border-[#E9D5FF] bg-white/85 p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(124,58,237,0.10)]">
+                        <div class="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-[#F472B6] to-rose-500 text-white shadow-lg transition duration-300 group-hover:scale-110">
                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
                         </div>
-                        <h4 class="font-semibold text-[#1F2937] mb-1">Análisis</h4>
-                        <p class="text-xs leading-5 text-[#6B7280]">Próximamente</p>
-                    </div>
+                        <h4 class="font-semibold text-[#1F2937] mb-1">Informes</h4>
+                        <p class="text-xs leading-5 text-[#6B7280]">Ventas, pedidos y productos más vendidos</p>
+                    </a>
                 </div>
             </div>
 
@@ -196,7 +194,7 @@
                         </div>
                         <div class="flex-1">
                             <p class="font-medium text-[#1F2937]">Completa la información de tu negocio</p>
-                            <p class="text-sm text-[#6B7280]">Agrega logo, descripción y horarios para atraer más clientes.</p>
+                            <p class="text-sm text-[#6B7280]">Agrega una descripción clara, tu teléfono y tu dirección para que tus clientas te contacten.</p>
                         </div>
                     </div>
 

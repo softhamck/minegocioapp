@@ -44,7 +44,7 @@ class OrderController extends Controller
             $query->where('business_id', $request->business_id);
         }
         
-        $orders = $query->paginate(15);
+        $orders = $query->paginate(15)->withQueryString();
         $statuses = ['pending', 'processing', 'completed', 'cancelled'];
         $businesses = Auth::user()->businesses;
         
@@ -82,6 +82,19 @@ class OrderController extends Controller
             'status' => 'required|in:pending,processing,completed,cancelled'
         ]);
         
+        if ($order->status === 'cancelled' && $request->status !== 'cancelled') {
+            return redirect()->route('emprendedor.orders.show', $order)
+                ->with('error', 'Un pedido cancelado no se puede reactivar. Pide a la clienta que haga un nuevo pedido.');
+        }
+
+        // Al cancelar, las unidades vuelven al inventario
+        if ($request->status === 'cancelled' && $order->status !== 'cancelled') {
+            $order->loadMissing('details.product');
+            foreach ($order->details as $detail) {
+                $detail->product?->increment('quantity', $detail->quantity);
+            }
+        }
+
         $order->update(['status' => $request->status]);
         
         return redirect()->route('emprendedor.orders.show', $order)

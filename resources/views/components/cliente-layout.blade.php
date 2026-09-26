@@ -165,7 +165,7 @@
 
                                                 <!-- Perfil -->
                                                 <x-dropdown-link 
-                                                    :href="url('profile.edit')" 
+                                                    :href="route('profile.edit')" 
                                                     class="flex items-center rounded-xl px-3 py-2 text-sm text-[#374151] hover:bg-[#F5F3FF] hover:text-[#7C3AED]"
                                                 >
                                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,16 +174,7 @@
                                                     Mi perfil
                                                 </x-dropdown-link>
 
-                                                <!-- Favoritos -->
-                                                <x-dropdown-link 
-                                                    :href="url('cliente.favoritos.index')" 
-                                                    class="flex items-center rounded-xl px-3 py-2 text-sm text-[#374151] hover:bg-[#FFF1F7] hover:text-[#EC4899]"
-                                                >
-                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                                    </svg>
-                                                    Favoritos
-                                                </x-dropdown-link>
+                                                
 
                                                 <div class="my-2 border-t border-[#F3E8FF]"></div>
 
@@ -227,19 +218,19 @@
 
                                             <div class="my-2 border-t border-[#F3E8FF]"></div>
 
-                                            <x-dropdown-link :href="url('cliente.dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                                            <x-dropdown-link :href="route('cliente.dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                                                 Dashboard
                                             </x-dropdown-link>
 
-                                            <x-dropdown-link :href="url('cliente.productos.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                                            <x-dropdown-link :href="route('cliente.productos.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                                                 Productos
                                             </x-dropdown-link>
 
-                                            <x-dropdown-link :href="url('cliente.pedidos.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                                            <x-dropdown-link :href="route('cliente.pedidos.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                                                 Mis pedidos
                                             </x-dropdown-link>
 
-                                            <x-dropdown-link :href="url('cliente.carrito.index')" class="flex items-center justify-between rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                                            <x-dropdown-link :href="route('cliente.carrito.index')" class="flex items-center justify-between rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                                                 <span>Carrito</span>
                                                 @if($cartCount ?? 0 > 0)
                                                     <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#F43F5E] text-[10px] font-bold text-white">
@@ -248,11 +239,9 @@
                                                 @endif
                                             </x-dropdown-link>
 
-                                            <x-dropdown-link :href="url('cliente.favoritos.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FFF1F7] hover:text-[#EC4899]">
-                                                Favoritos
-                                            </x-dropdown-link>
+                                            
 
-                                            <x-dropdown-link :href="url('profile.edit')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
+                                            <x-dropdown-link :href="route('profile.edit')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">
                                                 Mi perfil
                                             </x-dropdown-link>
 
@@ -278,6 +267,7 @@
             @endif
 
             <main class="relative z-10 flex-1">
+                @include('partials.flash')
                 {{ $slot }}
             </main>
         </div>

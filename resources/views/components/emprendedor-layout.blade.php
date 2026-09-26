@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'MiNegocioApp') }} - Emprendedor</title>
+        <title>{{ config('app.name', 'MiNegocioApp') }} - Emprendedora</title>
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -59,10 +59,10 @@
                             </div>
                             <div class="min-w-0">
                                 <p class="text-[11px] font-semibold uppercase tracking-[0.30em] text-[#7C3AED]">
-                                    MINEGOCIOPP
+                                    MINEGOCIOAPP
                                 </p>
                                 <div class="truncate text-[#1F2937] text-sm font-medium">
-                                    {{ $header ?? 'Panel Emprendedor' }}
+                                    {{ $header ?? 'Panel de la emprendedora' }}
                                 </div>
                             </div>
                         </div>
@@ -70,31 +70,38 @@
                         <!-- Desktop Navigation -->
                         <nav class="hidden items-center gap-2 sm:flex">
                             <x-nav-link
-                                :href="url('emprendedor/dashboard')"
-                                :active="request()->is('emprendedor/dashboard')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/dashboard') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.dashboard')"
+                                :active="request()->routeIs('emprendedor.dashboard')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.dashboard') ? 'nav-link-active' : '' }}">
                                 Dashboard
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="url('emprendedor/business')"
-                                :active="request()->is('emprendedor/business*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/business*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.business.index')"
+                                :active="request()->routeIs('emprendedor.business.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.business.*') ? 'nav-link-active' : '' }}">
                                 Mis Negocios
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="url('emprendedor/products')"
-                                :active="request()->is('emprendedor/products*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/products*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.products.all')"
+                                :active="request()->routeIs('emprendedor.products.all')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.products.all') ? 'nav-link-active' : '' }}">
                                 Productos
                             </x-nav-link>
 
                             <x-nav-link
-                                :href="url('emprendedor/orders')"
-                                :active="request()->is('emprendedor/orders*')"
-                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->is('emprendedor/orders*') ? 'nav-link-active' : '' }}">
+                                :href="route('emprendedor.orders.index')"
+                                :active="request()->routeIs('emprendedor.orders.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.orders.*') ? 'nav-link-active' : '' }}">
                                 Pedidos
+                            </x-nav-link>
+
+                            <x-nav-link
+                                :href="route('emprendedor.reports.index')"
+                                :active="request()->routeIs('emprendedor.reports.*')"
+                                class="nav-link-soft rounded-full px-4 py-2 text-sm font-medium {{ request()->routeIs('emprendedor.reports.*') ? 'nav-link-active' : '' }}">
+                                Informes
                             </x-nav-link>
 
                             <!-- Dropdown usuario -->
@@ -113,7 +120,7 @@
                                                     {{ Auth::user()->name }}
                                                 </p>
                                                 <p class="text-xs text-[#9CA3AF]">
-                                                    Emprendedor
+                                                    Emprendedora
                                                 </p>
                                             </div>
 
@@ -127,7 +134,7 @@
                                         <div class="rounded-2xl border border-[#F3E8FF] bg-white p-2 shadow-[0_20px_50px_rgba(124,58,237,0.15)]">
                                             <div class="px-3 py-2">
                                                 <p class="text-sm font-semibold text-[#1F2937]">{{ Auth::user()->name }}</p>
-                                                <p class="text-xs text-[#9CA3AF]">Emprendedor</p>
+                                                <p class="text-xs text-[#9CA3AF]">Emprendedora</p>
                                             </div>
 
                                             <div class="my-2 border-t border-[#F3E8FF]"></div>
@@ -171,15 +178,16 @@
                                     <div class="rounded-2xl border border-[#F3E8FF] bg-white/95 p-2 shadow-[0_18px_40px_rgba(124,58,237,0.12)] backdrop-blur-xl">
                                         <div class="px-3 py-2">
                                             <p class="text-sm font-semibold text-[#1F2937]">{{ Auth::user()->name }}</p>
-                                            <p class="text-xs text-[#9CA3AF]">Emprendedor</p>
+                                            <p class="text-xs text-[#9CA3AF]">Emprendedora</p>
                                         </div>
 
                                         <div class="my-2 border-t border-[#F3E8FF]"></div>
 
-                                        <x-dropdown-link :href="url('emprendedor/dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Dashboard</x-dropdown-link>
-                                        <x-dropdown-link :href="url('emprendedor/business')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mis Negocios</x-dropdown-link>
-                                        <x-dropdown-link :href="url('emprendedor/products')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
-                                        <x-dropdown-link :href="url('emprendedor/orders')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Pedidos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.dashboard')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Dashboard</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.business.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mis Negocios</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.products.all')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Productos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.orders.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Pedidos</x-dropdown-link>
+                                        <x-dropdown-link :href="route('emprendedor.reports.index')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Informes</x-dropdown-link>
 
                                         <x-dropdown-link :href="route('profile.edit')" class="rounded-xl px-3 py-2 text-sm text-[#6B7280] hover:bg-[#FAF5FF] hover:text-[#7C3AED]">Mi perfil</x-dropdown-link>
 
@@ -200,6 +208,7 @@
             </header>
 
             <main class="relative z-10 flex-1">
+                @include('partials.flash')
                 {{ $slot }}
             </main>
         </div>

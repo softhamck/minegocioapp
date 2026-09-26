@@ -68,7 +68,7 @@
 
             <!-- Hero -->
             <main class="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-8 lg:pt-10">
-                <div class="grid min-h-[82vh] items-center gap-14 lg:grid-cols-2">
+                <div class="grid min-h-[82vh] items-center gap-14 lg:grid-cols-2 lg:items-stretch">
 
                     <!-- Left -->
                     <section class="relative">
@@ -85,8 +85,8 @@
                         </h1>
 
                         <p class="mt-7 max-w-xl text-lg leading-8 text-[#6B7280] md:text-xl">
-                            Organiza tus ventas, conecta con tus clientes y presenta tu marca con una experiencia
-                            visual más femenina, moderna y profesional desde el primer vistazo.
+                            Registra tu negocio y tus productos, recibe pedidos de tus clientas y consulta
+                            tus ventas en un solo lugar.
                         </p>
 
                         <div class="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -110,8 +110,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                 </div>
-                                <p class="font-semibold text-[#1F2937]">Gestión clara</p>
-                                <p class="mt-1 text-sm text-[#6B7280]">Todo más simple y visual para tu día a día.</p>
+                                <p class="font-semibold text-[#1F2937]">Tu negocio y tus productos</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Crea tu tienda y carga productos con foto, precio y stock.</p>
                             </div>
 
                             <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
@@ -120,8 +120,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                 </div>
-                                <p class="font-semibold text-[#1F2937]">Ventas digitales</p>
-                                <p class="mt-1 text-sm text-[#6B7280]">Impulsa tus ingresos con una presencia atractiva.</p>
+                                <p class="font-semibold text-[#1F2937]">Catálogo para tus clientas</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Tus clientas ven tus productos, arman su carrito y hacen el pedido.</p>
                             </div>
 
                             <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
@@ -130,8 +130,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                 </div>
-                                <p class="font-semibold text-[#1F2937]">Clientes felices</p>
-                                <p class="mt-1 text-sm text-[#6B7280]">Genera confianza con una imagen delicada y profesional.</p>
+                                <p class="font-semibold text-[#1F2937]">Pedidos organizados</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Revisa cada pedido y actualiza su estado hasta la entrega.</p>
                             </div>
 
                             <div class="group rounded-2xl border border-white/60 bg-white/70 p-4 backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(124,58,237,0.10)]">
@@ -140,15 +140,15 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                 </div>
-                                <p class="font-semibold text-[#1F2937]">Crecimiento real</p>
-                                <p class="mt-1 text-sm text-[#6B7280]">Una experiencia pensada para vender mejor y escalar.</p>
+                                <p class="font-semibold text-[#1F2937]">Informes de ventas</p>
+                                <p class="mt-1 text-sm text-[#6B7280]">Ingresos, productos más vendidos y ventas de los últimos 6 meses.</p>
                             </div>
                         </div>
                     </section>
 
                     <!-- Right -->
-                    <section class="relative">
-                        <div class="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/65 p-6 shadow-[0_20px_60px_rgba(124,58,237,0.12)] backdrop-blur-xl md:p-8 lg:p-10">
+                    <section class="relative lg:flex lg:flex-col">
+                        <div class="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/65 p-6 lg:flex lg:flex-1 lg:flex-col lg:justify-center shadow-[0_20px_60px_rgba(124,58,237,0.12)] backdrop-blur-xl md:p-8 lg:p-10">
                             <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.45),rgba(255,255,255,0.08))]"></div>
                             <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#E9D5FF]/70 blur-2xl"></div>
                             <div class="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#FBCFE8]/70 blur-2xl"></div>
@@ -159,11 +159,11 @@
                                 </div>
 
                                 <h2 class="max-w-sm text-3xl font-bold leading-tight text-[#1F2937] md:text-4xl">
-                                    Una plataforma bonita también puede vender más
+                                    Todo tu negocio en un mismo lugar
                                 </h2>
 
                                 <p class="mt-4 max-w-md text-base leading-7 text-[#6B7280]">
-                                    Convierte tu presencia digital en una experiencia más cálida, confiable y memorable.
+                                    Deja de repartir tus productos, pedidos y ventas entre chats, redes y cuadernos.
                                 </p>
 
                                 <div class="mt-8 space-y-4">
@@ -187,9 +187,9 @@
                                                 Fluido
                                             </span>
                                         </div>
-                                        <h3 class="text-2xl font-semibold text-[#1F2937]">Clientes felices</h3>
+                                        <h3 class="text-2xl font-semibold text-[#1F2937]">Pedidos en orden</h3>
                                         <p class="mt-2 text-sm leading-6 text-[#6B7280]">
-                                            Mejora la experiencia de tus clientas con una interfaz amable y profesional.
+                                            Cada pedido llega a tu panel con los productos, la clienta y el total.
                                         </p>
                                     </div>
 
@@ -202,32 +202,10 @@
                                                 </h3>
                                             </div>
 
-                                            <div class="text-right">
-                                                <p class="text-4xl font-extrabold bg-gradient-to-r from-[#7C3AED] to-[#F472B6] bg-clip-text text-transparent">
-                                                    +80%
-                                                </p>
-                                                <p class="mt-1 text-sm text-[#6B7280]">
-                                                    de emprendedoras conectan mejor
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mt-8 grid grid-cols-3 gap-3">
-                                    <div class="rounded-2xl bg-white/80 p-4 text-center">
-                                        <p class="text-2xl font-bold text-[#7C3AED]">24/7</p>
-                                        <p class="mt-1 text-xs text-[#6B7280]">gestión</p>
-                                    </div>
-                                    <div class="rounded-2xl bg-white/80 p-4 text-center">
-                                        <p class="text-2xl font-bold text-[#F472B6]">+95%</p>
-                                        <p class="mt-1 text-xs text-[#6B7280]">claridad</p>
-                                    </div>
-                                    <div class="rounded-2xl bg-white/80 p-4 text-center">
-                                        <p class="text-2xl font-bold text-[#7C3AED]">∞</p>
-                                        <p class="mt-1 text-xs text-[#6B7280]">potencial</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </section>

@@ -29,4 +29,29 @@ class OrderController extends Controller
         
         return view('cliente.pedidos.show', compact('order'));
     }
+
+    /**
+     * La clienta cancela un pedido pendiente; las unidades vuelven al inventario.
+     */
+    public function cancel(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($order->status !== 'pending') {
+            return redirect()->route('cliente.pedidos.show', $order)
+                ->with('error', 'Solo puedes cancelar pedidos pendientes. Para otros cambios, contacta a la tienda.');
+        }
+
+        $order->loadMissing('details.product');
+        foreach ($order->details as $detail) {
+            $detail->product?->increment('quantity', $detail->quantity);
+        }
+
+        $order->update(['status' => 'cancelled']);
+
+        return redirect()->route('cliente.pedidos.show', $order)
+            ->with('success', 'Pedido cancelado correctamente.');
+    }
 }

@@ -12,7 +12,8 @@ class ClienteServiceProvider extends ServiceProvider
     {
         View::composer('cliente.*', function ($view) {
         if (Auth::check() && Auth::user()->rol_id == 3) {
-            $cartCount = \App\Models\Cart::where('user_id', Auth::id())->sum('quantity');
+            // El carrito se guarda en la sesión (ver Cliente\CartController)
+            $cartCount = collect(session('cart', []))->sum('quantity');
             $view->with('cartCount', $cartCount);
         }
     });

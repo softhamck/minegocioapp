@@ -16,7 +16,8 @@ class OrderDetail extends Model
         'product_id',
         'quantity',
         'price',
-        'subtotal'
+        'subtotal',
+        'unit_price',
     ];
 
     protected $casts = [
