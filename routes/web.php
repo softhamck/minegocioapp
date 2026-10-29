@@ -112,6 +112,11 @@ Route::middleware(['auth', 'role:2'])
         Route::patch('/orders/{order}/status', [\App\Http\Controllers\Emprendedor\OrderController::class, 'updateStatus'])
             ->name('orders.update-status');
 
+        // Asistente de IA (máx. 10 solicitudes por minuto por usuaria)
+        Route::post('/ai/product-text', [\App\Http\Controllers\Emprendedor\AiController::class, 'productText'])
+            ->middleware('throttle:10,1')
+            ->name('ai.product-text');
+
         // Reportes del emprendedor
         Route::get('/reports', [EmprendedorReportController::class, 'index'])
             ->name('reports.index');

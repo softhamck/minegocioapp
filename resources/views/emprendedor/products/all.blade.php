@@ -24,15 +24,16 @@
                     <div class="text-sm font-semibold text-[#7C3AED]">Total Productos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1 truncate">${{ number_format($products->sum(fn ($p) => $p->price * $p->quantity), 0) }}</div>
-                    <div class="text-sm font-semibold text-[#EC4899]">Valor Inventario</div>
+                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1 truncate">{{ \App\Support\Money::cop($stats['inventoryValue']) }}</div>
+                    <div class="text-sm font-semibold text-[#EC4899]">Valor del inventario</div>
+                    <div class="text-xs text-[#6B7280] mt-1">Precio × unidades en stock</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $products->where('active', 1)->count() }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $stats['active'] }}</div>
                     <div class="text-sm font-semibold text-[#F59E0B]">Productos Activos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $products->where('quantity', '<=', 5)->count() }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $stats['lowStock'] }}</div>
                     <div class="text-sm font-semibold text-[#A855F7]">Stock Bajo (≤5)</div>
                 </div>
             </div>
@@ -113,7 +114,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     @foreach($products as $product)
-                        <div class="group rounded-2xl border border-white/60 bg-white/70 p-5 backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(124,58,237,0.12)]">
+                        <div class="group flex h-full flex-col rounded-2xl border border-white/60 bg-white/70 p-5 backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(124,58,237,0.12)]">
                             <!-- Imagen del Producto -->
                             <div class="relative mb-4 h-48 w-full overflow-hidden rounded-xl">
                                 @if($product->image && Storage::disk('public')->exists($product->image))
@@ -160,19 +161,18 @@
                             </div>
 
                             <!-- Información del Producto -->
-                            <h3 class="text-lg font-bold text-[#1F2937] line-clamp-1 group-hover:text-[#7C3AED] transition-colors">
+                            <h3 class="min-h-[3.5rem] text-lg font-bold leading-7 text-[#1F2937] line-clamp-2 group-hover:text-[#7C3AED] transition-colors">
                                 {{ $product->name }}
                             </h3>
                             
-                            @if($product->description)
-                                <p class="mt-1 text-sm text-[#6B7280] line-clamp-2">
-                                    {{ $product->description }}
-                                </p>
-                            @endif
-                            
-                            <div class="mt-4 flex items-center justify-between">
+                            <p class="mt-1 min-h-[2.5rem] text-sm leading-5 text-[#6B7280] line-clamp-2">
+                                {{ $product->description }}
+                            </p>
+
+                            <!-- Precio y botones siempre al fondo de la tarjeta, alineados entre tarjetas -->
+                            <div class="mt-auto flex items-center justify-between pt-4">
                                 <div>
-                                    <span class="text-2xl font-extrabold text-[#1F2937]">${{ number_format($product->price, 0) }}</span>
+                                    <span class="text-2xl font-extrabold text-[#1F2937]">{{ \App\Support\Money::cop($product->price) }}</span>
                                     <span class="ml-1 text-xs text-[#9CA3AF]">COP</span>
                                 </div>
                                 <div class="text-sm text-[#6B7280]">

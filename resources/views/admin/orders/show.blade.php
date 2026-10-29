@@ -131,7 +131,9 @@
                         <h3 class="text-lg font-bold text-[#1F2937]">Productos del Pedido</h3>
                     </div>
                     
-                    <div class="overflow-x-auto">
+                    @include('partials.mobile.order-details', ['order' => $order])
+
+                    <div class="hidden overflow-x-auto md:block">
                         <table class="w-full">
                             <thead>
                                 <tr class="border-b border-[#F3E8FF]">
@@ -159,15 +161,15 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 text-center text-[#6B7280]">{{ $detail->quantity }}</td>
-                                    <td class="px-4 py-3 text-right font-medium text-[#1F2937]">${{ number_format($detail->price, 0) }}</td>
-                                    <td class="px-4 py-3 text-right font-semibold text-[#7C3AED]">${{ number_format($detail->subtotal, 0) }}</td>
+                                    <td class="px-4 py-3 text-right font-medium text-[#1F2937]">{{ \App\Support\Money::cop($detail->price) }}</td>
+                                    <td class="px-4 py-3 text-right font-semibold text-[#7C3AED]">{{ \App\Support\Money::cop($detail->subtotal) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot class="border-t border-[#F3E8FF] bg-[#F5F3FF]/30">
                                 <tr>
                                     <td colspan="3" class="px-4 py-3 text-right font-bold text-[#1F2937]">Total:</td>
-                                    <td class="px-4 py-3 text-right text-xl font-extrabold text-[#7C3AED]">${{ number_format($order->total, 0) }}</td>
+                                    <td class="px-4 py-3 text-right text-xl font-extrabold text-[#7C3AED]">{{ \App\Support\Money::cop($order->total) }}</td>
                                 </tr>
                             </tfoot>
                         </table>

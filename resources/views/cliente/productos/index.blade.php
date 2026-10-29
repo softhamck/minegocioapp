@@ -1,24 +1,21 @@
 <x-cliente-layout>
     <x-slot name="header">
         <div class="flex items-center space-x-3">
+            <div>
+                <h2 class="text-xl font-semibold text-[#1F2937]">
+                    Catálogo de Productos
+                </h2>
+                <p class="text-sm text-[#6B7280]">
+                    Descubre todos los productos disponibles
+                </p>
+            </div>
         </div>
     </x-slot>
 
     <!-- Este es el slot principal que se inyecta en el layout -->
     <div class="py-6 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto">
-            <!-- Título y Subtítulo -->
-                <div class="mt-8">
-                <!-- Título del Catálogo -->
-                <div class="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <div class="h-8 w-1 rounded-full bg-gradient-to-b from-[#7C3AED] to-[#F472B6]"></div>
-                            <h2 class="text-3xl font-extrabold text-[#1F2937]">Catálogo de Productos</h2>
-                        </div>
-                        <p class="mt-1 text-[#6B7280]">Descubre todos los productos disponibles</p>
-                    </div>
-                </div>
+                <div class="mt-2">
 
             <!-- Search and Filters -->
             <div class="glass-card rounded-2xl p-6 mb-8 bg-white/70 backdrop-blur border border-white/60">
@@ -94,7 +91,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     @foreach($products as $product)
-                        <div class="glass-card rounded-2xl p-5 transition-all duration-300 group border border-white/60 bg-white/70 backdrop-blur hover:-translate-y-2 hover:shadow-xl">
+                        <div class="glass-card flex h-full flex-col rounded-2xl p-5 transition-all duration-300 group border border-white/60 bg-white/70 backdrop-blur hover:-translate-y-2 hover:shadow-xl">
                             <!-- Product Image -->
                             <div class="relative mb-4 h-48 w-full overflow-hidden rounded-xl">
                                 @if($product->image)
@@ -132,28 +129,26 @@
                                 @endif
                             </div>
 
-                            <!-- Product Info -->
-                            <div class="space-y-3">
-                                <h3 class="font-semibold text-[#1F2937] text-lg group-hover:text-purple-600 transition-colors line-clamp-2">
+                            <!-- Product Info: ocupa el alto restante para que precio y botón queden alineados en todas las tarjetas -->
+                            <div class="flex flex-1 flex-col gap-3">
+                                <h3 class="min-h-[3.5rem] font-semibold text-[#1F2937] text-lg leading-7 group-hover:text-[#7C3AED] transition-colors line-clamp-2">
                                     {{ $product->name }}
                                 </h3>
 
-                                @if($product->description)
-                                    <p class="text-gray-600 text-sm line-clamp-2 leading-relaxed">
-                                        {{ $product->description }}
-                                    </p>
-                                @endif
+                                <p class="min-h-[2.75rem] text-gray-600 text-sm line-clamp-2 leading-relaxed">
+                                    {{ $product->description }}
+                                </p>
 
-                                <div class="flex items-center justify-between">
+                                <div class="mt-auto flex items-center justify-between">
                                     <div class="text-2xl font-bold text-[#1F2937]">
-                                        ${{ number_format($product->price, 0) }}
+                                        {{ \App\Support\Money::cop($product->price) }}
                                     </div>
                                     <span class="text-gray-500 text-sm">COP</span>
                                 </div>
 
                                 <!-- Action Button -->
                                 <a href="{{ route('cliente.productos.show', $product->id) }}"
-                                   class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-center py-3 rounded-full transition-all duration-300 font-semibold flex items-center justify-center group/btn">
+                                   class="w-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] hover:from-[#6D28D9] hover:to-[#EC4899] text-white text-center py-2.5 rounded-full transition-all duration-300 font-semibold flex items-center justify-center group/btn">
                                     <svg class="w-5 h-5 mr-2 group-hover/btn:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>

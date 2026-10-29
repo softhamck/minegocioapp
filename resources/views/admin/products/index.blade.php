@@ -24,15 +24,16 @@
                     <div class="text-sm font-semibold text-[#7C3AED]">Productos Totales</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1 truncate">${{ number_format($products->sum('price'), 0) }}</div>
-                    <div class="text-sm font-semibold text-[#EC4899]">Valor Inventario</div>
+                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1 truncate">{{ \App\Support\Money::cop($stats['inventoryValue']) }}</div>
+                    <div class="text-sm font-semibold text-[#EC4899]">Valor del inventario</div>
+                    <div class="text-xs text-[#6B7280] mt-1">Precio × unidades en stock</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $products->where('active', 1)->count() }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $stats['active'] }}</div>
                     <div class="text-sm font-semibold text-[#F59E0B]">Productos Activos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $products->where('quantity', '<=', 5)->count() }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $stats['lowStock'] }}</div>
                     <div class="text-sm font-semibold text-[#A855F7]">Stock Bajo (≤5)</div>
                 </div>
             </div>
@@ -42,7 +43,14 @@
                 <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#FBCFE8]/60 blur-2xl"></div>
                 <div class="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#E9D5FF]/60 blur-2xl"></div>
                 
-                <div class="relative overflow-x-auto">
+                @include('partials.mobile.product-cards', [
+                    'products' => $products,
+                    'editUrl' => fn ($p) => route('admin.products.edit', $p->id),
+                    'deleteUrl' => fn ($p) => route('admin.products.destroy', $p->id),
+                    'showBusiness' => true,
+                ])
+
+                <div class="relative hidden overflow-x-auto md:block">
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-[#F3E8FF] bg-[#F5F3FF]/30">
@@ -78,7 +86,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm text-[#7C3AED] font-medium">{{ $product->business->name ?? 'N/A' }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="font-semibold text-[#1F2937]">${{ number_format($product->price, 0) }}</span>
+                                    <span class="font-semibold text-[#1F2937]">{{ \App\Support\Money::cop($product->price) }}</span>
                                     <span class="text-xs text-[#9CA3AF] ml-1">COP</span>
                                 </td>
                                 <td class="px-6 py-4">

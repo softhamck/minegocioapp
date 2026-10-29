@@ -70,15 +70,14 @@
                                     <p class="text-[11px] font-semibold uppercase tracking-[0.30em] text-[#7C3AED]">
                                         MiNegocioApp
                                     </p>
-                                    <div class="truncate">
+                                    <div class="page-header-slot truncate">
                                         {{ $header }}
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Desktop Navigation -->
-                            <nav class="hidden items-center gap-2 sm:flex">
-                                <nav class="hidden items-center gap-2 sm:flex">
+                            <nav class="hidden items-center gap-2 lg:flex">
                                 <x-nav-link
                                     :href="route('cliente.dashboard')"
                                     :active="request()->routeIs('cliente.dashboard')"
@@ -199,7 +198,7 @@
                             </nav>
 
                             <!-- Mobile Menu -->
-                            <div class="sm:hidden dropdown-content">
+                            <div class="lg:hidden dropdown-content">
                                 <x-dropdown align="right" width="64">
                                     <x-slot name="trigger">
                                         <button class="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/80 p-2 text-[#6B7280] shadow-sm transition hover:text-[#7C3AED] focus:outline-none">

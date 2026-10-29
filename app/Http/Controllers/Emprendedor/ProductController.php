@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Emprendedor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Support\Money;
+use Illuminate\Support\Facades\DB;
 use App\Models\Business;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +31,8 @@ class ProductController extends Controller
     {
         $business = Auth::user()->businesses()->findOrFail($businessId);
 
+        $request->merge(['price' => Money::parse($request->input('price'))]);
+
         $validated = $request->validate([
             'name'       => 'required|string|max:255',
             'description'=> 'nullable|string',
@@ -37,6 +41,12 @@ class ProductController extends Controller
             'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'active'     => 'boolean',
         ], [
+            'price.required' => 'Escribe el precio del producto.',
+            'price.numeric' => 'Escribe el precio solo con números, por ejemplo 80.600.',
+            'price.min' => 'El precio no puede ser negativo.',
+            'quantity.required' => 'Escribe la cantidad en stock.',
+            'quantity.integer' => 'La cantidad debe ser un número entero.',
+            'quantity.min' => 'La cantidad no puede ser negativa.',
             'image.max' => 'La foto pesa demasiado. El máximo es 5 MB.',
             'image.image' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
             'image.mimes' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
@@ -75,6 +85,8 @@ class ProductController extends Controller
         $business = Auth::user()->businesses()->findOrFail($businessId);
         $product = $business->products()->findOrFail($productId);
 
+        $request->merge(['price' => Money::parse($request->input('price'))]);
+
         $validated = $request->validate([
             'name'       => 'required|string|max:255',
             'description'=> 'nullable|string',
@@ -83,6 +95,12 @@ class ProductController extends Controller
             'image'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'active'     => 'boolean',
         ], [
+            'price.required' => 'Escribe el precio del producto.',
+            'price.numeric' => 'Escribe el precio solo con números, por ejemplo 80.600.',
+            'price.min' => 'El precio no puede ser negativo.',
+            'quantity.required' => 'Escribe la cantidad en stock.',
+            'quantity.integer' => 'La cantidad debe ser un número entero.',
+            'quantity.min' => 'La cantidad no puede ser negativa.',
             'image.max' => 'La foto pesa demasiado. El máximo es 5 MB.',
             'image.image' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
             'image.mimes' => 'El archivo debe ser una foto (JPG, PNG, GIF o WEBP).',
@@ -178,9 +196,17 @@ class ProductController extends Controller
                 break;
         }
         
+        // Estadísticas sobre TODOS los productos filtrados, no solo los de la página actual
+        $statsQuery = (clone $query)->reorder();
+        $stats = [
+            'inventoryValue' => (float) (clone $statsQuery)->sum(DB::raw('price * quantity')),
+            'active'         => (clone $statsQuery)->where('active', 1)->count(),
+            'lowStock'       => (clone $statsQuery)->where('quantity', '<=', 5)->count(),
+        ];
+
         $products = $query->paginate(12)->withQueryString();
         $businesses = Auth::user()->businesses;
         
-        return view('emprendedor.products.all', compact('products', 'businesses'));
+        return view('emprendedor.products.all', compact('products', 'businesses', 'stats'));
     }
 }

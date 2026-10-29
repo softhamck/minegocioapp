@@ -24,7 +24,7 @@
                     <div class="text-sm font-semibold text-[#7C3AED]">Total Pedidos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1 truncate">${{ number_format($orders->sum('total'), 0) }}</div>
+                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1 truncate">{{ \App\Support\Money::cop($orders->sum('total')) }}</div>
                     <div class="text-sm font-semibold text-[#EC4899]">Ventas Totales</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
@@ -89,7 +89,9 @@
                 <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#FBCFE8]/60 blur-2xl"></div>
                 <div class="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#E9D5FF]/60 blur-2xl"></div>
                 
-                <div class="relative overflow-x-auto">
+                @include('partials.mobile.order-cards', ['orders' => $orders, 'showRoute' => 'emprendedor.orders.show'])
+
+                <div class="relative hidden overflow-x-auto lg:block">
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-[#F3E8FF] bg-[#F5F3FF]/30">
@@ -114,7 +116,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm text-[#6B7280]">{{ $order->business->name ?? 'N/A' }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="font-semibold text-[#1F2937]">${{ number_format($order->total, 0) }}</span>
+                                    <span class="font-semibold text-[#1F2937]">{{ \App\Support\Money::cop($order->total) }}</span>
                                     <span class="text-xs text-[#9CA3AF]">COP</span>
                                 </td>
                                 <td class="px-6 py-4">

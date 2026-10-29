@@ -1,11 +1,6 @@
 <x-cliente-layout>
     <x-slot name="header">
         <div class="flex items-center space-x-3">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.22)]">
-                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-            </div>
             <div>
                 <h2 class="text-xl font-semibold text-[#1F2937]">
                     Pedido #{{ $order->id }}
@@ -118,7 +113,9 @@
                         <h3 class="text-lg font-bold text-[#1F2937]">Productos del Pedido</h3>
                     </div>
                     
-                    <div class="overflow-x-auto">
+                    @include('partials.mobile.order-details', ['order' => $order])
+
+                    <div class="hidden overflow-x-auto md:block">
                         <table class="w-full">
                             <thead>
                                 <tr class="border-b border-[#F3E8FF]">
@@ -146,15 +143,15 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 text-center text-[#6B7280]">{{ $detail->quantity }}</td>
-                                    <td class="px-4 py-3 text-right font-medium text-[#1F2937]">${{ number_format($detail->price, 0) }}</td>
-                                    <td class="px-4 py-3 text-right font-semibold text-[#7C3AED]">${{ number_format($detail->subtotal, 0) }}</td>
+                                    <td class="px-4 py-3 text-right font-medium text-[#1F2937]">{{ \App\Support\Money::cop($detail->price) }}</td>
+                                    <td class="px-4 py-3 text-right font-semibold text-[#7C3AED]">{{ \App\Support\Money::cop($detail->subtotal) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot class="border-t border-[#F3E8FF] bg-[#F5F3FF]/30">
                                 <tr>
                                     <td colspan="3" class="px-4 py-3 text-right font-bold text-[#1F2937]">Total:</td>
-                                    <td class="px-4 py-3 text-right text-xl font-extrabold text-[#7C3AED]">${{ number_format($order->total, 0) }}</td>
+                                    <td class="px-4 py-3 text-right text-xl font-extrabold text-[#7C3AED]">{{ \App\Support\Money::cop($order->total) }}</td>
                                 </tr>
                             </tfoot>
                         </table>

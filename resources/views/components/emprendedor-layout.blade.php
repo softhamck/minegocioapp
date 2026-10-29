@@ -55,20 +55,20 @@
                         <!-- Brand -->
                         <div class="flex min-w-0 items-center gap-3">
                             <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.20)]">
-                                <span class="text-sm font-bold text-white">M</span>
+                                <span class="text-sm font-bold text-white">MN</span>
                             </div>
                             <div class="min-w-0">
                                 <p class="text-[11px] font-semibold uppercase tracking-[0.30em] text-[#7C3AED]">
                                     MINEGOCIOAPP
                                 </p>
-                                <div class="truncate text-[#1F2937] text-sm font-medium">
+                                <div class="page-header-slot truncate text-[#1F2937] text-sm font-medium">
                                     {{ $header ?? 'Panel de la emprendedora' }}
                                 </div>
                             </div>
                         </div>
 
                         <!-- Desktop Navigation -->
-                        <nav class="hidden items-center gap-2 sm:flex">
+                        <nav class="hidden items-center gap-2 lg:flex">
                             <x-nav-link
                                 :href="route('emprendedor.dashboard')"
                                 :active="request()->routeIs('emprendedor.dashboard')"
@@ -164,7 +164,7 @@
                         </nav>
 
                         <!-- Mobile Menu -->
-                        <div class="sm:hidden dropdown-content">
+                        <div class="lg:hidden dropdown-content">
                             <x-dropdown align="right" width="64">
                                 <x-slot name="trigger">
                                     <button class="inline-flex items-center justify-center rounded-full border border-white/70 bg-white/80 p-2 text-[#6B7280] shadow-sm transition hover:text-[#7C3AED] focus:outline-none">

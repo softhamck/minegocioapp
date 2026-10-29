@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm text-[#6B7280]">Total</p>
-                                        <p class="text-2xl font-extrabold text-[#7C3AED]">${{ number_format($order->total, 0) }}</p>
+                                        <p class="text-2xl font-extrabold text-[#7C3AED]">{{ \App\Support\Money::cop($order->total) }}</p>
                                     </div>
                                 </div>
 
