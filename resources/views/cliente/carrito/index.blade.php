@@ -40,7 +40,55 @@
                     <div class="lg:col-span-2">
                         <div class="relative overflow-hidden rounded-2xl border border-white/60 bg-white/70 backdrop-blur">
                             <div class="relative">
-                                <div class="overflow-x-auto">
+                                {{-- Vista para celular --}}
+                                <div class="divide-y divide-[#F3E8FF] md:hidden">
+                                    @foreach($cart as $id => $item)
+                                        <div class="flex gap-3 p-4">
+                                            @if($item['image'] && Illuminate\Support\Facades\Storage::disk('public')->exists($item['image']))
+                                                <img src="{{ asset('storage/' . $item['image']) }}" class="h-16 w-16 shrink-0 rounded-xl object-cover" alt="">
+                                            @else
+                                                <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#F3E8FF] to-[#FCE7F3]">
+                                                    <svg class="h-7 w-7 text-[#C4B5FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                            <div class="min-w-0 flex-1">
+                                                <div class="flex items-start justify-between gap-2">
+                                                    <div class="min-w-0">
+                                                        <p class="font-semibold leading-tight text-[#1F2937]">{{ $item['name'] }}</p>
+                                                        <p class="truncate text-xs text-[#6B7280]">{{ $item['business_name'] ?? 'Negocio' }}</p>
+                                                    </div>
+                                                    <form action="{{ route('cliente.carrito.remove', $id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="rounded-lg p-1.5 text-[#E11D48] hover:bg-red-50" title="Eliminar">
+                                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <p class="text-sm text-[#7C3AED]">{{ \App\Support\Money::cop($item['price']) }} c/u</p>
+                                                <div class="mt-2 flex items-center justify-between">
+                                                    <form action="{{ route('cliente.carrito.update', $id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <div class="flex items-center rounded-full border border-[#F3E8FF] bg-white/80">
+                                                            <button type="button" onclick="decrementCartQuantity(this)" class="rounded-l-full px-3 py-1.5 text-[#7C3AED] hover:bg-[#F3E8FF]" aria-label="Quitar uno">−</button>
+                                                            <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1"
+                                                                   class="w-12 border-0 bg-transparent py-1 text-center text-sm text-[#1F2937] focus:outline-none">
+                                                            <button type="button" onclick="incrementCartQuantity(this)" class="rounded-r-full px-3 py-1.5 text-[#7C3AED] hover:bg-[#F3E8FF]" aria-label="Agregar uno">+</button>
+                                                        </div>
+                                                    </form>
+                                                    <p class="font-semibold text-[#7C3AED]">{{ \App\Support\Money::cop($item['price'] * $item['quantity']) }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="hidden overflow-x-auto md:block">
                                     <table class="w-full">
                                         <thead>
                                             <tr class="border-b border-[#F3E8FF] bg-[#F5F3FF]/30">
@@ -67,7 +115,7 @@
                                                             <div>
                                                                 <p class="font-semibold text-[#1F2937]">{{ $item['name'] }}</p>
                                                                 <p class="text-xs text-[#6B7280]">{{ $item['business_name'] ?? 'Negocio' }}</p>
-                                                                <p class="text-sm text-[#7C3AED]">${{ number_format($item['price'], 0) }} c/u</p>
+                                                                <p class="text-sm text-[#7C3AED]">{{ \App\Support\Money::cop($item['price']) }} c/u</p>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -97,7 +145,7 @@
                                                         </form>
                                                     </td>
                                                     <td class="px-4 py-3 text-right font-semibold text-[#7C3AED]">
-                                                        ${{ number_format($item['price'] * $item['quantity'], 0) }}
+                                                        {{ \App\Support\Money::cop($item['price'] * $item['quantity']) }}
                                                     </td>
                                                     <td class="px-4 py-3 text-center">
                                                         <form action="{{ route('cliente.carrito.remove', $id) }}" method="POST">
@@ -140,7 +188,7 @@
                                 <div class="space-y-3">
                                     <div class="flex justify-between">
                                         <span class="text-[#6B7280]">Subtotal</span>
-                                        <span class="font-semibold text-[#1F2937]">${{ number_format($total, 0) }}</span>
+                                        <span class="font-semibold text-[#1F2937]">{{ \App\Support\Money::cop($total) }}</span>
                                     </div>
                                     <div class="flex justify-between">
                                         <span class="text-[#6B7280]">Envío</span>
@@ -149,7 +197,7 @@
                                     <div class="border-t border-[#F3E8FF] pt-3">
                                         <div class="flex justify-between">
                                             <span class="text-lg font-bold text-[#1F2937]">Total</span>
-                                            <span class="text-xl font-extrabold text-[#7C3AED]">${{ number_format($total, 0) }}</span>
+                                            <span class="text-xl font-extrabold text-[#7C3AED]">{{ \App\Support\Money::cop($total) }}</span>
                                         </div>
                                     </div>
                                 </div>

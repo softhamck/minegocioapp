@@ -24,25 +24,25 @@
             <div class="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-[#E9D5FF]/40 blur-3xl"></div>
 
             <!-- Header -->
-            <header class="relative z-20 mx-auto w-full max-w-7xl px-6 py-8">
+            <header class="relative z-20 mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 sm:py-8">
                 @if (Route::has('login'))
-                    <nav class="flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.22)]">
+                    <nav class="flex items-center justify-between gap-3">
+                        <div class="flex min-w-0 items-center gap-3 sm:gap-4">
+                            <div class="flex h-10 w-10 shrink-0 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#7C3AED] via-[#A78BFA] to-[#F472B6] shadow-[0_12px_30px_rgba(124,58,237,0.22)]">
                                 <span class="text-lg font-bold text-white">M</span>
                             </div>
 
-                            <div>
+                            <div class="hidden sm:block">
                                 <p class="text-xs font-semibold uppercase tracking-[0.32em] text-[#7C3AED]">
                                     MiNegocioApp
                                 </p>
-                                <p class="text-sm font-medium text-[#6B7280]">
+                                <p class="hidden text-sm font-medium text-[#6B7280] sm:block">
                                     para mujeres emprendedoras
                                 </p>
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-3">
+                        <div class="flex shrink-0 items-center gap-1 sm:gap-3">
                             @auth
                                 <a href="{{ url('/dashboard') }}"
                                    class="rounded-full bg-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(124,58,237,0.25)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#6D28D9]">
@@ -50,13 +50,13 @@
                                 </a>
                             @else
                                 <a href="{{ route('login') }}"
-                                   class="rounded-full px-4 py-2 text-sm font-medium text-[#6B7280] transition duration-300 hover:bg-white/60 hover:text-[#7C3AED]">
+                                   class="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-[#6B7280] sm:px-4 transition duration-300 hover:bg-white/60 hover:text-[#7C3AED]">
                                     Iniciar Sesión
                                 </a>
 
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}"
-                                       class="rounded-full bg-[#F472B6] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(244,114,182,0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#EC4899]">
+                                       class="whitespace-nowrap rounded-full bg-[#F472B6] px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(244,114,182,0.28)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#EC4899]">
                                         Registrarse
                                     </a>
                                 @endif
@@ -67,7 +67,7 @@
             </header>
 
             <!-- Hero -->
-            <main class="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-8 lg:pt-10">
+            <main class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 pb-20 pt-8 lg:pt-10">
                 <div class="grid min-h-[82vh] items-center gap-14 lg:grid-cols-2 lg:items-stretch">
 
                     <!-- Left -->
@@ -77,7 +77,7 @@
                             Diseñado para mujeres que crean, lideran y crecen
                         </div>
 
-                        <h1 class="max-w-2xl text-5xl font-extrabold leading-[0.98] tracking-tight text-[#1F2937] md:text-6xl lg:text-7xl">
+                        <h1 class="max-w-2xl text-4xl font-extrabold leading-[1.02] tracking-tight text-[#1F2937] sm:text-5xl md:text-6xl lg:text-7xl">
                             Haz crecer tu negocio con una imagen
                             <span class="bg-gradient-to-r from-[#7C3AED] via-[#A855F7] to-[#F472B6] bg-clip-text text-transparent">
                                 elegante, suave y poderosa

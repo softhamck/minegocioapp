@@ -72,7 +72,7 @@
 
                         <!-- Precio -->
                         <div class="flex items-baseline gap-2">
-                            <span class="text-4xl font-extrabold text-[#7C3AED]">${{ number_format($product->price, 0) }}</span>
+                            <span class="text-4xl font-extrabold text-[#7C3AED]">{{ \App\Support\Money::cop($product->price) }}</span>
                             <span class="text-sm text-[#6B7280]">COP</span>
                         </div>
 
@@ -197,7 +197,7 @@
                                     @endif
                                 </div>
                                 <h4 class="font-bold text-[#1F2937] line-clamp-1">{{ $related->name }}</h4>
-                                <p class="text-xl font-extrabold text-[#7C3AED] mt-2">${{ number_format($related->price, 0) }}</p>
+                                <p class="text-xl font-extrabold text-[#7C3AED] mt-2">{{ \App\Support\Money::cop($related->price) }}</p>
                                 <a href="{{ route('cliente.productos.show', $related) }}" 
                                    class="mt-3 block w-full rounded-full bg-gradient-to-r from-[#7C3AED] to-[#F472B6] py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:from-[#6D28D9] hover:to-[#EC4899]">
                                     Ver Detalle

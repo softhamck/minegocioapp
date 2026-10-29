@@ -56,8 +56,9 @@
                     <div class="text-sm font-semibold text-[#F59E0B]">Inactivos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(124,58,237,0.12)] text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">${{ number_format($products->sum(fn ($p) => $p->price * $p->quantity), 0) }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ \App\Support\Money::cop($products->sum(fn ($p) => $p->price * $p->quantity)) }}</div>
                     <div class="text-sm font-semibold text-[#A855F7]">Valor del inventario</div>
+                    <div class="text-xs text-[#6B7280] mt-1">Precio × unidades en stock</div>
                 </div>
             </div>
 
@@ -87,7 +88,13 @@
                         </div>
                     @else
                         <!-- Products Table -->
-                        <div class="overflow-x-auto">
+                        @include('partials.mobile.product-cards', [
+                            'products' => $products,
+                            'editUrl' => fn ($p) => route('emprendedor.business.products.edit', [$business, $p]),
+                            'deleteUrl' => fn ($p) => route('emprendedor.business.products.destroy', [$business, $p]),
+                        ])
+
+                        <div class="hidden overflow-x-auto md:block">
                             <table class="w-full">
                                 <thead>
                                     <tr class="border-b border-[#F3E8FF] bg-[#F5F3FF]/30">
@@ -127,7 +134,7 @@
 
                                             <!-- Price -->
                                             <td class="px-6 py-4">
-                                                <div class="font-bold text-[#1F2937]">${{ number_format($product->price, 0) }}</div>
+                                                <div class="font-bold text-[#1F2937]">{{ \App\Support\Money::cop($product->price) }}</div>
                                                 <div class="text-xs text-[#9CA3AF]">COP</div>
                                             </td>
 

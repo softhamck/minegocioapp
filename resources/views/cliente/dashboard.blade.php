@@ -109,7 +109,7 @@
 
                         <div class="text-right">
                             <div class="text-3xl font-extrabold text-[#1F2937]">
-                                ${{ number_format($totalSpent ?? 0, 0) }}
+                                {{ \App\Support\Money::cop($totalSpent ?? 0) }}
                             </div>
                             <div class="text-sm font-medium text-[#7C3AED]">
                                 Total comprado
@@ -201,7 +201,7 @@
                                 <p class="font-medium text-[#1F2937]">Pedido #{{ $order->id }} · {{ $order->business->name ?? 'Tienda' }}</p>
                                 <p class="text-sm text-[#6B7280]">{{ $order->created_at->format('d/m/Y') }} · {{ ['pending'=>'Pendiente','processing'=>'En proceso','completed'=>'Completado','cancelled'=>'Cancelado'][$order->status] ?? $order->status }}</p>
                             </div>
-                            <span class="text-sm font-semibold text-[#7C3AED]">${{ number_format($order->total, 0, ',', '.') }}</span>
+                            <span class="text-sm font-semibold text-[#7C3AED]">{{ \App\Support\Money::cop($order->total) }}</span>
                         </a>
                     @empty
                         <div class="rounded-[1.5rem] border border-dashed border-[#E9D5FF] bg-white/60 px-6 py-10 text-center">

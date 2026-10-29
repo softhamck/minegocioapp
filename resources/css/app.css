@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* En celular, el encabezado de cada página muestra solo el título (el subtítulo se cortaba) */
+@media (max-width: 639px) {
+    .page-header-slot p {
+        display: none;
+    }
+}

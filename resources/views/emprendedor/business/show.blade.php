@@ -146,7 +146,7 @@
                     <div class="text-sm font-semibold text-[#EC4899]">Pedidos</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">${{ number_format($totalSales ?? 0, 0) }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ \App\Support\Money::cop($totalSales ?? 0) }}</div>
                     <div class="text-sm font-semibold text-[#A855F7]">Ventas Totales</div>
                 </div>
             </div>

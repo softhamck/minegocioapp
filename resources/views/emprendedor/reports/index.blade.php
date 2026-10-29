@@ -36,7 +36,7 @@
             <!-- Stats -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1">${{ number_format($totalRevenue, 2) }}</div>
+                    <div class="text-2xl font-extrabold text-[#1F2937] mb-1">{{ \App\Support\Money::cop($totalRevenue) }}</div>
                     <div class="text-sm font-semibold text-[#7C3AED]">Ingresos (pedidos completados)</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
@@ -44,7 +44,7 @@
                     <div class="text-sm font-semibold text-[#EC4899]">Pedidos totales</div>
                 </div>
                 <div class="group rounded-[1.5rem] border border-white/70 bg-white/80 p-5 shadow-[0_16px_40px_rgba(124,58,237,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 text-center">
-                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ $ordersByStatus->get('completed', 0) }}</div>
+                    <div class="text-3xl font-extrabold text-[#1F2937] mb-1">{{ (int) $ordersByStatus->get('completed', 0) }}</div>
                     <div class="text-sm font-semibold text-[#A855F7]">Pedidos completados</div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                             <div class="flex flex-1 flex-col items-center gap-2">
                                 <div class="text-xs font-semibold text-[#7C3AED]">
                                     @if ($month['total'] > 0)
-                                        ${{ number_format($month['total'], 0) }}
+                                        {{ \App\Support\Money::cop($month['total']) }}
                                     @endif
                                 </div>
                                 <div class="w-full max-w-[42px] rounded-t-lg bg-gradient-to-t from-[#7C3AED] to-[#F472B6] transition-all duration-300"
@@ -84,7 +84,7 @@
                         @forelse ($ordersByStatus as $status => $count)
                             <div class="flex items-center justify-between rounded-xl px-4 py-3 {{ $statusColors[$status] ?? 'bg-gray-100 text-gray-700' }}">
                                 <span class="text-sm font-semibold">{{ $statusLabels[$status] ?? ucfirst($status) }}</span>
-                                <span class="text-lg font-extrabold">{{ $count }}</span>
+                                <span class="text-lg font-extrabold">{{ (int) $count }}</span>
                             </div>
                         @empty
                             <p class="text-sm text-[#6B7280]">Todavía no tienes pedidos registrados.</p>
@@ -116,8 +116,8 @@
                                 @foreach ($topProducts as $item)
                                     <tr class="border-b border-[#F3E8FF]/70 last:border-0">
                                         <td class="py-3 pr-4 text-sm font-medium text-[#1F2937]">{{ $item->product->name ?? 'Producto eliminado' }}</td>
-                                        <td class="py-3 pr-4 text-sm text-[#6B7280]">{{ $item->total_quantity }}</td>
-                                        <td class="py-3 pr-4 text-sm text-[#6B7280]">${{ number_format($item->total_revenue, 2) }}</td>
+                                        <td class="py-3 pr-4 text-sm text-[#6B7280]">{{ (int) $item->total_quantity }}</td>
+                                        <td class="py-3 pr-4 text-sm text-[#6B7280]">{{ \App\Support\Money::cop($item->total_revenue) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -96,6 +96,7 @@
                                 <p class="text-xs text-[#6B7280]">Incluye detalles que ayuden a vender tu producto</p>
                                 <span id="charCount" class="text-xs text-[#6B7280]">0/1000</span>
                             </div>
+                            @include('emprendedor.partials.ai-assistant')
                         </div>
 
                         <!-- Price and Quantity -->
@@ -107,16 +108,20 @@
                                 </label>
                                 <div class="relative">
                                     <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]">$</span>
-                                    <input type="number" 
+                                    <input type="text"
+                                           inputmode="decimal"
+                                           autocomplete="off" 
                                            id="price"
                                            name="price" 
                                            value="{{ old('price') }}"
-                                           placeholder="0.00"
-                                           step="0.01"
-                                           min="0"
+                                           placeholder="Ej: 80.600"
+                                           pattern="[0-9][0-9.,]*"
+                                           title="Escribe solo números, por ejemplo 80.600 (sin signo negativo)"
+                                           oninput="this.value = this.value.replace(/[^0-9.,]/g, '')"
                                            class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 pl-8 pr-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
                                            required>
                                 </div>
+                                <p class="mt-1 text-xs text-[#6B7280]">Escribe el precio en pesos, por ejemplo 80.600</p>
                                 @error('price')
                                     <p class="mt-1 text-sm text-[#E11D48]">{{ $message }}</p>
                                 @enderror
@@ -133,6 +138,8 @@
                                        value="{{ old('quantity') }}"
                                        placeholder="0"
                                        min="0"
+                                       step="1"
+                                       oninput="if (this.value !== '' && Number(this.value) < 0) this.value = 0"
                                        class="w-full rounded-xl border border-[#F3E8FF] bg-white/80 py-3 px-4 text-[#1F2937] placeholder:text-[#9CA3AF] focus:border-[#C4B5FD] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]/40 transition-all duration-200"
                                        required>
                                 @error('quantity')
