@@ -90,7 +90,7 @@
 
                     <div class="flex items-end justify-between gap-3 h-48">
                         @foreach ($months as $month)
-                            <div class="flex flex-1 flex-col items-center gap-2">
+                            <div class="flex h-full flex-1 flex-col items-center justify-end gap-2">
                                 <div class="text-xs font-semibold text-[#7C3AED]">
                                     @if ($month['total'] > 0)
                                         {{ \App\Support\Money::cop($month['total']) }}
