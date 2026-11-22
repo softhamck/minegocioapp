@@ -81,7 +81,7 @@ class FlujoPreEncuestaTest extends TestCase
         $this->actingAs($this->clienta)->get("/cliente/productos/{$p->id}")->assertOk()->assertSee('wa.me/573001234567', false);
         $this->actingAs($this->clienta)->post("/cliente/carrito/{$p->id}/add", ['quantity' => 2])->assertRedirect('/cliente/carrito');
         $this->actingAs($this->clienta)->get('/cliente/carrito')->assertOk()->assertSee('Confirmar pedido');
-        $r = $this->actingAs($this->clienta)->post('/cliente/carrito/checkout'); fwrite(STDERR, 'DBG '.$r->status().' '.($r->exception?->getMessage()).' '.json_encode(session()->all()).PHP_EOL); $r->assertRedirect('/cliente/pedidos');
+        $r = $this->actingAs($this->clienta)->post('/cliente/carrito/checkout'); $r->assertRedirect('/cliente/pedidos');
 
         $pedido = Order::first();
         $this->assertSame('pending', $pedido->status);
